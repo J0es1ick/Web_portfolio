@@ -1,104 +1,1415 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Bootstrap demo</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Joes1ick — портфолио</title>
+    <meta
+      name="description"
+      content="Личный сайт-портфолио Joes1ick: обо мне, навыки, опыт и пет-проекты."
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ===================================================================
+     ТОКЕНЫ ДИЗАЙНА
+     =================================================================== */
+      :root {
+        --bg: #f3f5f8;
+        --surface: #ffffff;
+        --surface-alt: #fafbfd;
+        --border: #e2e6ed;
+        --ink: #14181f;
+        --ink-soft: #3b4250;
+        --muted: #6b7280;
+
+        --violet: #5b4fd6;
+        --violet-dark: #4c3fc2;
+        --amber: #b4780f;
+        --amber-bg: #f6e3be;
+        --teal: #12805f;
+        --teal-bg: #cfeee2;
+        --red: #d1383d;
+        --yellow: #e3a008;
+        --green: #2fae66;
+
+        --font-mono:
+          "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+        --font-sans:
+          "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+        --radius-s: 8px;
+        --radius-m: 14px;
+        --radius-l: 22px;
+
+        --header-h: 64px;
+        --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+      }
+
+      /* ===================================================================
+     СБРОС И БАЗА
+     =================================================================== */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: var(--font-sans);
+        font-size: 16px;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+      h1,
+      h2,
+      h3,
+      p,
+      ul,
+      ol {
+        margin: 0;
+      }
+      ul {
+        padding: 0;
+        list-style: none;
+      }
+      img {
+        max-width: 100%;
+        display: block;
+      }
+      a {
+        color: inherit;
+      }
+      ::selection {
+        background: var(--violet);
+        color: #fff;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 880px;
+        margin: 0 auto;
+        padding: 0 28px;
+      }
+
+      .skip-link {
+        position: absolute;
+        left: -999px;
+        top: 0;
+        background: var(--ink);
+        color: #fff;
+        padding: 10px 16px;
+        border-radius: var(--radius-s);
+        z-index: 200;
+      }
+      .skip-link:focus {
+        left: 16px;
+        top: 16px;
+      }
+
+      a:focus-visible,
+      button:focus-visible,
+      .tab:focus-visible {
+        outline: 2px solid var(--violet);
+        outline-offset: 3px;
+        border-radius: 4px;
+      }
+
+      /* ===================================================================
+     TAB BAR (навигация «как в редакторе кода»)
+     =================================================================== */
+      .tabbar {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        height: var(--header-h);
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        background: rgba(243, 245, 248, 0.82);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border);
+        padding: 0 20px;
+        overflow: hidden;
+      }
+      .tabbar__dots {
+        display: flex;
+        gap: 6px;
+        flex: 0 0 auto;
+      }
+      .tabbar__dots span {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: block;
+      }
+      .tabbar__dots span:nth-child(1) {
+        background: var(--red);
+      }
+      .tabbar__dots span:nth-child(2) {
+        background: var(--yellow);
+      }
+      .tabbar__dots span:nth-child(3) {
+        background: var(--green);
+      }
+
+      .tabbar__scroll {
+        position: relative;
+        flex: 1 1 auto;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+      .tabbar__scroll::-webkit-scrollbar {
+        display: none;
+      }
+
+      .tabbar__tabs {
+        position: relative;
+        display: flex;
+        gap: 4px;
+        width: max-content;
+      }
+      .tab {
+        font-family: var(--font-mono);
+        font-size: 13px;
+        color: var(--muted);
+        text-decoration: none;
+        white-space: nowrap;
+        padding: 10px 12px;
+        border-radius: var(--radius-s) var(--radius-s) 0 0;
+        transition:
+          color 0.2s var(--ease),
+          background 0.2s var(--ease);
+      }
+      .tab:hover {
+        color: var(--ink);
+        background: rgba(0, 0, 0, 0.03);
+      }
+      .tab.is-active {
+        color: var(--violet-dark);
+      }
+
+      .tabbar__indicator {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 2px;
+        width: 0;
+        background: var(--violet);
+        border-radius: 2px;
+        transition:
+          transform 0.35s var(--ease),
+          width 0.35s var(--ease);
+      }
+
+      .tabbar__cta {
+        flex: 0 0 auto;
+        font-family: var(--font-mono);
+        font-size: 13px;
+        text-decoration: none;
+        color: var(--ink);
+        border: 1px solid var(--border);
+        padding: 7px 12px;
+        border-radius: var(--radius-s);
+        background: var(--surface);
+        transition:
+          border-color 0.2s var(--ease),
+          transform 0.2s var(--ease);
+        display: none;
+      }
+      .tabbar__cta:hover {
+        border-color: var(--violet);
+        transform: translateY(-1px);
+      }
+
+      @media (min-width: 640px) {
+        .tabbar__cta {
+          display: inline-block;
+        }
+      }
+
+      /* ===================================================================
+     HERO
+     =================================================================== */
+      .hero {
+        padding: 76px 0 64px;
+        background-image: linear-gradient(
+          90deg,
+          rgba(91, 79, 214, 0.05) 1px,
+          transparent 1px
+        );
+        background-size: 42px 100%;
+        background-position: center top;
+      }
+      .hero__grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 40px;
+        align-items: center;
+      }
+      @media (min-width: 760px) {
+        .hero__grid {
+          grid-template-columns: 1.15fr 0.85fr;
+        }
+      }
+
+      .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 13px;
+        color: var(--violet-dark);
+        letter-spacing: 0.02em;
+        margin-bottom: 14px;
+        display: inline-block;
+      }
+      .hero h1 {
+        font-size: clamp(34px, 5.5vw, 52px);
+        line-height: 1.1;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+      }
+      .hero h1 .highlight {
+        color: var(--violet-dark);
+        position: relative;
+      }
+      .hero h1 .highlight::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 2px;
+        height: 10px;
+        background: var(--amber-bg);
+        z-index: -1;
+        border-radius: 3px;
+      }
+      .hero__tagline {
+        margin-top: 18px;
+        font-size: 17px;
+        color: var(--ink-soft);
+        max-width: 46ch;
+      }
+      .hero__tagline em {
+        font-style: normal;
+        color: var(--muted);
+      }
+
+      .hero__actions {
+        margin-top: 30px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .btn {
+        font-family: var(--font-mono);
+        font-size: 14px;
+        text-decoration: none;
+        padding: 12px 20px;
+        border-radius: var(--radius-s);
+        transition:
+          transform 0.2s var(--ease),
+          box-shadow 0.2s var(--ease),
+          background 0.2s var(--ease);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .btn--primary {
+        background: var(--ink);
+        color: #fff;
+      }
+      .btn--primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 24px rgba(20, 24, 31, 0.18);
+      }
+      .btn--ghost {
+        background: transparent;
+        color: var(--ink);
+        border: 1px solid var(--border);
+      }
+      .btn--ghost:hover {
+        border-color: var(--violet);
+        color: var(--violet-dark);
+        transform: translateY(-2px);
+      }
+
+      /* --- терминал --- */
+      .terminal {
+        background: var(--ink);
+        border-radius: var(--radius-m);
+        overflow: hidden;
+        box-shadow: 0 24px 48px -12px rgba(20, 24, 31, 0.35);
+      }
+      .terminal__titlebar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 14px;
+        background: #1d222c;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .terminal__titlebar .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+      }
+      .terminal__titlebar .dot--red {
+        background: var(--red);
+      }
+      .terminal__titlebar .dot--yellow {
+        background: var(--yellow);
+      }
+      .terminal__titlebar .dot--green {
+        background: var(--green);
+      }
+      .terminal__titlebar span.label {
+        margin-left: 6px;
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.45);
+      }
+      .terminal__body {
+        padding: 20px 18px 24px;
+        font-family: var(--font-mono);
+        font-size: 13.5px;
+        line-height: 1.9;
+        min-height: 168px;
+      }
+      .terminal__line {
+        color: rgba(255, 255, 255, 0.9);
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+      .terminal__line .prompt {
+        color: var(--green);
+        margin-right: 8px;
+      }
+      .terminal__line.is-output {
+        color: rgba(255, 255, 255, 0.62);
+      }
+      .terminal__cursor {
+        display: inline-block;
+        width: 7px;
+        height: 14px;
+        background: var(--green);
+        vertical-align: middle;
+        margin-left: 2px;
+        animation: blink 1s steps(1) infinite;
+      }
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
+
+      .hero__photo-wrap {
+        display: flex;
+        justify-content: center;
+      }
+      @media (min-width: 760px) {
+        .hero__photo-wrap {
+          justify-content: flex-end;
+        }
+      }
+      .avatar {
+        position: relative;
+        width: 172px;
+        height: 172px;
+      }
+      .avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 4px solid var(--surface);
+        box-shadow: 0 16px 32px -8px rgba(20, 24, 31, 0.25);
+      }
+      .avatar__status {
+        position: absolute;
+        bottom: 10px;
+        right: 8px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: var(--green);
+        border: 3px solid var(--bg);
+      }
+      .avatar__status::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: var(--green);
+        animation: pulse 2s var(--ease) infinite;
+      }
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+          opacity: 0.55;
+        }
+        100% {
+          transform: scale(2.1);
+          opacity: 0;
+        }
+      }
+
+      /* ===================================================================
+     ОБЩИЙ БЛОК СЕКЦИИ
+     =================================================================== */
+      .section {
+        padding: 72px 0;
+        border-top: 1px solid var(--border);
+        scroll-margin-top: var(--header-h);
+      }
+      .section__head {
+        margin-bottom: 34px;
+        max-width: 60ch;
+      }
+      .section__head h2 {
+        font-size: clamp(24px, 3vw, 30px);
+        font-weight: 800;
+        margin-top: 6px;
+      }
+      .section__note {
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 15px;
+      }
+
+      /* --- reveal on scroll --- */
+      .reveal {
+        opacity: 0;
+        transform: translateY(18px);
+        transition:
+          opacity 0.6s var(--ease),
+          transform 0.6s var(--ease);
+      }
+      .reveal.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* ===================================================================
+     ABOUT
+     =================================================================== */
+      .about__text {
+        font-size: 17px;
+        color: var(--ink-soft);
+        max-width: 66ch;
+      }
+      .about__text .todo {
+        color: var(--muted);
+        font-style: italic;
+      }
+
+      /* ===================================================================
+     SKILLS — код-блок в стиле package.json 
+     =================================================================== */
+      .code-block {
+        background: var(--ink);
+        border-radius: var(--radius-m);
+        overflow: hidden;
+        box-shadow: 0 20px 40px -16px rgba(20, 24, 31, 0.3);
+      }
+      .code-block__bar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 16px;
+        background: #1d222c;
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.45);
+      }
+      .code-block__bar .dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+      }
+      .code-block__bar .dot--red {
+        background: var(--red);
+      }
+      .code-block__bar .dot--yellow {
+        background: var(--yellow);
+      }
+      .code-block__bar .dot--green {
+        background: var(--green);
+      }
+      .code-block pre {
+        margin: 0;
+        padding: 20px 22px 24px;
+        overflow-x: auto;
+        font-family: var(--font-mono);
+        font-size: 13.5px;
+        line-height: 2;
+      }
+      .code-block code {
+        color: rgba(255, 255, 255, 0.85);
+      }
+      .tok-key {
+        color: #9c8cff;
+      }
+      .tok-str {
+        color: #f0c674;
+      }
+      .tok-punct {
+        color: rgba(255, 255, 255, 0.35);
+      }
+      .tok-comment {
+        color: rgba(255, 255, 255, 0.32);
+        font-style: italic;
+      }
+
+      /* ===================================================================
+     EXPERIENCE — git-log таймлайн
+     =================================================================== */
+      .commit-log {
+        position: relative;
+        padding-left: 26px;
+      }
+      .commit-log::before {
+        content: "";
+        position: absolute;
+        left: 5px;
+        top: 6px;
+        bottom: 6px;
+        width: 2px;
+        background: var(--border);
+      }
+      .commit {
+        position: relative;
+        padding-bottom: 34px;
+      }
+      .commit:last-child {
+        padding-bottom: 0;
+      }
+      .commit::before {
+        content: "";
+        position: absolute;
+        left: -26px;
+        top: 5px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--surface);
+        border: 3px solid var(--violet);
+      }
+      .commit--edu::before {
+        border-color: var(--teal);
+      }
+      .commit__meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: baseline;
+        font-family: var(--font-mono);
+        font-size: 12.5px;
+        color: var(--muted);
+        margin-bottom: 6px;
+      }
+      .commit__hash {
+        color: var(--violet-dark);
+      }
+      .commit--edu .commit__hash {
+        color: var(--teal);
+      }
+      .commit__title {
+        font-size: 17px;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+      .commit__desc {
+        color: var(--ink-soft);
+        font-size: 15px;
+        max-width: 62ch;
+      }
+
+      /* ===================================================================
+     PROJECTS — карточки-репозитории
+     =================================================================== */
+      .repo-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+      @media (min-width: 640px) {
+        .repo-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      .repo-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-m);
+        padding: 22px;
+        transition:
+          transform 0.25s var(--ease),
+          box-shadow 0.25s var(--ease),
+          border-color 0.25s var(--ease);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .repo-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 36px -18px rgba(20, 24, 31, 0.28);
+        border-color: rgba(91, 79, 214, 0.35);
+      }
+      .repo-card__head {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .repo-card__head svg {
+        color: var(--muted);
+        flex: 0 0 auto;
+      }
+      .repo-card__head h3 {
+        font-family: var(--font-mono);
+        font-size: 16px;
+        font-weight: 600;
+      }
+      .repo-card__desc {
+        color: var(--ink-soft);
+        font-size: 14.5px;
+        flex: 1;
+      }
+      .repo-card__desc .todo {
+        color: var(--muted);
+        font-style: italic;
+      }
+      .repo-card__tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .repo-card__tags li {
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        padding: 3px 9px;
+        border-radius: 999px;
+        background: var(--surface-alt);
+        border: 1px solid var(--border);
+        color: var(--ink-soft);
+      }
+      .repo-card__link {
+        margin-top: 4px;
+        font-family: var(--font-mono);
+        font-size: 13.5px;
+        text-decoration: none;
+        color: var(--violet-dark);
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .repo-card__link svg {
+        transition: transform 0.2s var(--ease);
+      }
+      .repo-card__link:hover svg {
+        transform: translateX(3px);
+      }
+
+      .repo-card--ghost {
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        border-style: dashed;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .repo-card--ghost:hover {
+        border-color: var(--violet);
+        color: var(--violet-dark);
+      }
+
+      /* ===================================================================
+     CONTACT
+     =================================================================== */
+      .contact-terminal .terminal__body {
+        min-height: 0;
+      }
+      .contact-line {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap;
+        padding: 6px 0;
+      }
+      .contact-line .prompt {
+        color: var(--green);
+        margin-right: 8px;
+      }
+      .contact-line a.value {
+        color: rgba(255, 255, 255, 0.85);
+        text-decoration: none;
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.25);
+        transition:
+          color 0.2s var(--ease),
+          border-color 0.2s var(--ease);
+      }
+      .contact-line a.value:hover {
+        color: #fff;
+        border-color: rgba(255, 255, 255, 0.7);
+      }
+      .contact-line .go {
+        color: rgba(255, 255, 255, 0.35);
+        transition:
+          transform 0.2s var(--ease),
+          color 0.2s var(--ease);
+      }
+      .contact-line:hover .go {
+        transform: translateX(3px);
+        color: var(--green);
+      }
+
+      /* ===================================================================
+     FOOTER
+     =================================================================== */
+      footer {
+        padding: 40px 0 60px;
+        border-top: 1px solid var(--border);
+      }
+      .footer__row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+      }
+      .footer__brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: var(--ink);
+        font-weight: 700;
+      }
+      .footer__note {
+        font-family: var(--font-mono);
+        font-size: 12.5px;
+        color: var(--muted);
+      }
+
+      /* ===================================================================
+     ДОСТУПНОСТЬ: reduced motion
+     =================================================================== */
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        * {
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
+        }
+        .reveal {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+    </style>
   </head>
   <body>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-      integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
-      crossorigin="anonymous"
-    ></script>
-    <header
-      class="d-flex flex-wrap justify-content-center rounded-bottom-5 border-bottom mw-100 mh-100 py-4 bg-secondary-subtle"
-      style="height: 94px"
-    >
-      <a
-        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
-      >
-        <svg class="bi me-2" width="40" height="32">
-          <use xlink:href="#bootstrap" />
-        </svg>
-        <span class="fs-2 fw-semibold">About me</span>
-      </a>
-    </header>
-    <main class="mt-5 mb-5">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="">
-            <img
-              src="assets/Screenshot_1.png"
-              alt="Моя фотография"
-              class="profile-img img-fluid rounded-5 mb-5"
-            />
-            <h2 class="mb-3">Привет! Я Joes1ick</h2>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla
-              deleniti officiis, deserunt fuga ducimus atque. Doloribus
-              voluptate consequatur vel laborum illum ipsam non repellendus.
-              Adipisci cupiditate reiciendis eligendi dolorem architecto.
-            </p>
-            <h3 class="mb-3">Мои навыки</h3>
-            <ul>
-              <li>Lorem</li>
-              <li>Ipsum</li>
-              <li>Dolor</li>
-              <li>Sit</li>
-            </ul>
-            <h3 class="mb-3">Образование</h3>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad dicta
-              qui itaque similique ratione reprehenderit! Esse provident facere
-              dolorem blanditiis obcaecati, numquam, alias, laboriosam sapiente
-              quasi magni adipisci? Omnis, placeat.
-            </p>
-            <h3 class="mb-3">Опыт работы</h3>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque
-              dolorem neque quas animi rem ut esse ullam incidunt eligendi quam!
-              At deserunt, alias nam nostrum aliquam beatae eius quas quasi?
-            </p>
-          </div>
+    <a class="skip-link" href="#main">Перейти к основному содержимому</a>
+
+    <!-- =====================  ПАНЕЛЬ ВКЛАДОК / НАВИГАЦИЯ  ===================== -->
+    <nav class="tabbar" aria-label="Разделы сайта">
+      <div class="tabbar__dots" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="tabbar__scroll">
+        <div class="tabbar__tabs" id="tabbarTabs">
+          <a href="#about" class="tab" data-tab>~/about.md</a>
+          <a href="#skills" class="tab" data-tab>~/skills.json</a>
+          <a href="#experience" class="tab" data-tab>~/experience.log</a>
+          <a href="#projects" class="tab" data-tab>~/projects/</a>
+          <a href="#contact" class="tab" data-tab>~/contact.sh</a>
+          <span class="tabbar__indicator" id="tabIndicator"></span>
         </div>
       </div>
-    </main>
-    <footer
-      class="d-flex flex-wrap justify-content-center rounded-top-5 border-top mw-100 mh-100 py-4 bg-secondary-subtle"
-      style="height: 94px"
-    >
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <a
-              href="https://github.com/J0es1ick"
-              class="d-flex align-items-center justify-content-center link-body-emphasis text-decoration-none"
-            >
-              <svg class="bi me-2" width="40" height="32">
-                <use xlink:href="#bootstrap" />
-              </svg>
-              <span class="fs-4 fw-semibold">&copy; 2024 Joes1ick</span>
-            </a>
+      <a
+        class="tabbar__cta"
+        href="https://github.com/J0es1ick"
+        target="_blank"
+        rel="noopener"
+        >GitHub ↗</a
+      >
+    </nav>
+
+    <main id="main">
+      <!-- =====================  HERO  ===================== -->
+      <section class="hero" id="top">
+        <div class="container hero__grid">
+          <div>
+            <span class="eyebrow">// личный сайт-портфолио</span>
+            <h1>Привет, я <span class="highlight">Joes1ick</span></h1>
+            <p class="hero__tagline">
+              Backend / Fullstack-разработчик, который проектирует сложные
+              системы, оптимизирует алгоритмы и превращает исследовательские
+              идеи в готовые продукты. Работаю с Go, Python, TypeScript, React и
+              Computer Vision, уделяя внимание архитектуре, производительности и
+              качеству кода.
+            </p>
+
+            <div class="hero__actions">
+              <a href="#projects" class="btn btn--primary">
+                [ Смотреть проекты ]
+              </a>
+              <a href="#contact" class="btn btn--ghost"> [ Написать мне ] </a>
+            </div>
+
+            <div class="terminal" style="margin-top: 36px" aria-hidden="true">
+              <div class="terminal__titlebar">
+                <span class="dot dot--red"></span
+                ><span class="dot dot--yellow"></span
+                ><span class="dot dot--green"></span>
+                <span class="label">joes1ick@portfolio:~</span>
+              </div>
+              <div class="terminal__body" id="typedTerminal"></div>
+            </div>
+            <p class="sr-only">Статус: открыт к предложениям.</p>
+          </div>
+
+          <div class="hero__photo-wrap">
+            <div class="avatar">
+              <img src="assets/Screenshot_1.png" alt="Фотография Joes1ick" />
+              <span
+                class="avatar__status"
+                title="Открыт(а) к предложениям"
+              ></span>
+            </div>
           </div>
         </div>
+      </section>
+
+      <!-- =====================  ОБО МНЕ  ===================== -->
+      <section class="section reveal" id="about">
+        <div class="container">
+          <div class="section__head">
+            <span class="eyebrow">about.md</span>
+            <h2>Обо мне</h2>
+          </div>
+          <p class="about__text">
+            Я Backend / Fullstack-разработчик с коммерческим опытом создания
+            высоконагруженных и алгоритмически сложных систем. Мне интересно не
+            просто писать код, а разбираться в проблеме, искать оптимальные
+            решения и доводить продукт до состояния, когда им действительно
+            можно пользоваться в реальном бизнесе. Сейчас работаю в R&D над
+            промышленным комплексом автоматического измерения грузов, где
+            участвую в разработке всего технологического пайплайна: от обработки
+            облаков точек и алгоритмов Computer Vision до backend-сервисов, REST
+            API и desktop-приложений. За время работы занимался оптимизацией
+            вычислений, переносом критических участков на GPU, проектированием
+            архитектуры новых сервисов и интеграцией системы с внешними WMS.
+            Помимо backend-разработки мне нравится проектировать архитектуру,
+            разбирать сложные технические задачи и создавать решения, которые
+            остаются понятными и удобными для дальнейшего развития. Постоянно
+            изучаю новые технологии и стараюсь писать код, который одинаково
+            хорошо работает сегодня и не становится проблемой завтра.
+          </p>
+        </div>
+      </section>
+
+      <!-- =====================  НАВЫКИ  ===================== -->
+      <section class="section reveal" id="skills">
+        <div class="container">
+          <div class="section__head">
+            <span class="eyebrow">skills.json</span>
+            <h2>Навыки</h2>
+          </div>
+
+          <div class="code-block">
+            <div class="code-block__bar">
+              <span class="dot dot--red"></span
+              ><span class="dot dot--yellow"></span
+              ><span class="dot dot--green"></span>
+              <span style="margin-left: 6px">skills.json</span>
+            </div>
+            <pre><code><span class="tok-punct">{</span>
+  <span class="tok-key">"languages"</span><span class="tok-punct">:</span> [<span class="tok-str">"Go"</span>, <span class="tok-str">"TypeScript"</span>, <span class="tok-str">"JavaScript"</span>, <span class="tok-str">"Python"</span>, <span class="tok-str">"C++"</span>]<span class="tok-punct">,</span>
+  <span class="tok-key">"backend"</span><span class="tok-punct">:</span> [<span class="tok-str">"REST API"</span>, <span class="tok-str">"Django"</span>, <span class="tok-str">"Node.js"</span>, <span class="tok-str">"NestJS"</span>, <span class="tok-str">"PostgreSQL"</span>, <span class="tok-str">"Redis"</span>, <span class="tok-str">"MongoDB"</span>]<span class="tok-punct">,</span>
+  <span class="tok-key">"frontend"</span><span class="tok-punct">:</span> [<span class="tok-str">"React"</span>, <span class="tok-str">"Vite"</span>, <span class="tok-str">"Electron"</span>]<span class="tok-punct">,</span>
+  <span class="tok-key">"Infrastructure"</span><span class="tok-punct">:</span> [<span class="tok-str">"Docker"</span>, <span class="tok-str">"Git"</span>]<span class="tok-punct">,</span>
+  <span class="tok-key">"currentlyLearning"</span><span class="tok-punct">:</span> [<span class="tok-str">"..."</span>]
+<span class="tok-punct">}</span></code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================  ОПЫТ И ОБРАЗОВАНИЕ  ===================== -->
+      <section class="section reveal" id="experience">
+        <div class="container">
+          <div class="section__head">
+            <span class="eyebrow">experience.log</span>
+            <h2>Опыт и образование</h2>
+          </div>
+
+          <ol class="commit-log">
+            <li class="commit">
+              <div class="commit__meta">
+                <span class="commit__hash">7f3a9c1</span>
+                <span>май 2025 — н.в.</span>
+              </div>
+              <h3 class="commit__title">Fullstack Developer, R&D · Garpix</h3>
+              <p class="commit__desc">
+                Разрабатываю промышленный программно-аппаратный комплекс
+                Visioner для автоматического измерения весогабаритных
+                характеристик грузов. Работаю одновременно с backend, frontend и
+                алгоритмической частью продукта. За время работы: повысил
+                точность измерений до 2–5 см вместо прежних ошибок до 10 см;
+                полностью разработал модуль построения полноценной 3D-модели по
+                облаку точек; перенес критический измерительный пайплайн на GPU,
+                сократив время обработки примерно с 30 до 5 секунд; разработал
+                REST API на Go для интеграции с WMS; создал desktop-приложение
+                на React + TypeScript + Electron; переработал backend на
+                Python/Django и интеграционный слой; участвовал в проектировании
+                нового продукта на стеке Go + React + Electron; в период
+                отсутствия техлида координировал работу R&D-команды:
+                декомпозицию задач, code review, интеграцию решений и поддержку
+                разработчиков.
+              </p>
+            </li>
+            <li class="commit commit--edu">
+              <div class="commit__meta">
+                <span class="commit__hash">2b6e4d0</span>
+                <span>2023 — 2027</span>
+              </div>
+              <h3 class="commit__title">
+                Ивановский государственный химико-технологический университет ·
+                Информационные системы и технологии
+              </h3>
+              <p class="commit__desc">
+                Получаю профильное образование в области разработки
+                информационных систем. Параллельно с обучением работаю
+                коммерческим разработчиком, что позволяет сразу применять
+                полученные знания на практике.
+              </p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- =====================  ПЕТ-ПРОЕКТЫ  ===================== -->
+      <section class="section reveal" id="projects">
+        <div class="container">
+          <div class="section__head">
+            <span class="eyebrow">projects/</span>
+            <h2>Пет-проекты</h2>
+            <p class="section__note">
+              Несколько проектов, над которыми я работал(а) в свободное время.
+            </p>
+          </div>
+
+          <div class="repo-grid">
+            <article class="repo-card">
+              <div class="repo-card__head">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M2 2.5A1.5 1.5 0 0 1 3.5 1h5.086a1.5 1.5 0 0 1 1.06.44l2.914 2.914A1.5 1.5 0 0 1 13 5.414V13.5a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 2 13.5v-11Z"
+                  ></path>
+                </svg>
+                <h3>project-one</h3>
+              </div>
+              <p class="repo-card__desc">
+                <span class="todo">[Проект 1]</span>
+              </p>
+              <ul class="repo-card__tags">
+                <li>JavaScript</li>
+                <li>React</li>
+              </ul>
+              <a
+                class="repo-card__link"
+                href="#"
+                target="_blank"
+                rel="noopener"
+              >
+                Открыть на GitHub
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  aria-hidden="true"
+                >
+                  <path d="M4 12 12 4M6 4h6v6" />
+                </svg>
+              </a>
+            </article>
+
+            <article class="repo-card">
+              <div class="repo-card__head">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M2 2.5A1.5 1.5 0 0 1 3.5 1h5.086a1.5 1.5 0 0 1 1.06.44l2.914 2.914A1.5 1.5 0 0 1 13 5.414V13.5a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 2 13.5v-11Z"
+                  ></path>
+                </svg>
+                <h3>project-two</h3>
+              </div>
+              <p class="repo-card__desc">
+                <span class="todo">[Проект 2]</span>
+              </p>
+              <ul class="repo-card__tags">
+                <li>Python</li>
+                <li>FastAPI</li>
+              </ul>
+              <a
+                class="repo-card__link"
+                href="#"
+                target="_blank"
+                rel="noopener"
+              >
+                Открыть на GitHub
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  aria-hidden="true"
+                >
+                  <path d="M4 12 12 4M6 4h6v6" />
+                </svg>
+              </a>
+            </article>
+
+            <article class="repo-card">
+              <div class="repo-card__head">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M2 2.5A1.5 1.5 0 0 1 3.5 1h5.086a1.5 1.5 0 0 1 1.06.44l2.914 2.914A1.5 1.5 0 0 1 13 5.414V13.5a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 2 13.5v-11Z"
+                  ></path>
+                </svg>
+                <h3>project-three</h3>
+              </div>
+              <p class="repo-card__desc">
+                <span class="todo">[Проект 3]</span>
+              </p>
+              <ul class="repo-card__tags">
+                <li>Node.js</li>
+                <li>PostgreSQL</li>
+              </ul>
+              <a
+                class="repo-card__link"
+                href="#"
+                target="_blank"
+                rel="noopener"
+              >
+                Открыть на GitHub
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  aria-hidden="true"
+                >
+                  <path d="M4 12 12 4M6 4h6v6" />
+                </svg>
+              </a>
+            </article>
+
+            <article class="repo-card repo-card--ghost">
+              <p>+ какой-то проект</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================  КОНТАКТЫ  ===================== -->
+      <section class="section reveal" id="contact">
+        <div class="container">
+          <div class="section__head">
+            <span class="eyebrow">contact.sh</span>
+            <h2>Связаться со мной</h2>
+          </div>
+
+          <div class="terminal contact-terminal">
+            <div class="terminal__titlebar">
+              <span class="dot dot--red"></span
+              ><span class="dot dot--yellow"></span
+              ><span class="dot dot--green"></span>
+              <span class="label">contact.sh</span>
+            </div>
+            <div class="terminal__body">
+              <div class="contact-line">
+                <span
+                  ><span class="prompt">$</span>open github.com/J0es1ick</span
+                >
+                <a
+                  class="value"
+                  href="https://github.com/J0es1ick"
+                  target="_blank"
+                  rel="noopener"
+                  >→ github.com/J0es1ick</a
+                >
+              </div>
+              <div class="contact-line">
+                <span><span class="prompt">$</span>open mailto</span>
+                <a class="value" href="mailto:you@example.com"
+                  >→ mrjoeslick@gmail.com</a
+                >
+              </div>
+              <div class="contact-line">
+                <span><span class="prompt">$</span>open telegram</span>
+                <a
+                  class="value"
+                  href="https://t.me/Joes1ick"
+                  target="_blank"
+                  rel="noopener"
+                  >→ t.me/Joes1ick</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container footer__row">
+        <a
+          class="footer__brand"
+          href="https://github.com/J0es1ick"
+          target="_blank"
+          rel="noopener"
+        >
+          <svg
+            width="22"
+            height="22"
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"
+            ></path>
+          </svg>
+          J0es1ick
+        </a>
+        <span class="footer__note"
+          >© <span id="year"></span> · собрано на HTML, CSS и JS</span
+        >
       </div>
     </footer>
+
+    <script>
+      (function () {
+        "use strict";
+        var reduceMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        ).matches;
+
+        var yearEl = document.getElementById("year");
+        if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+        var lines = [
+          { type: "prompt", text: "whoami" },
+          {
+            type: "output",
+            text: "Joes1ick — Backend / Fullstack-разработчик",
+          },
+          { type: "prompt", text: "cat interests.txt" },
+          { type: "output", text: "Веб-разработка" },
+          { type: "prompt", text: "echo $STATUS" },
+          { type: "output", text: "открыт к предложениям" },
+        ];
+        var host = document.getElementById("typedTerminal");
+
+        function renderStatic() {
+          host.innerHTML = "";
+          lines.forEach(function (l) {
+            var p = document.createElement("p");
+            p.className =
+              "terminal__line" + (l.type === "output" ? " is-output" : "");
+            if (l.type === "prompt") {
+              p.innerHTML = '<span class="prompt">$</span>' + l.text;
+            } else {
+              p.textContent = l.text;
+            }
+            host.appendChild(p);
+          });
+          var cursor = document.createElement("span");
+          cursor.className = "terminal__cursor";
+          host.appendChild(cursor);
+        }
+
+        function typeWriter() {
+          host.innerHTML = "";
+          var lineIndex = 0,
+            charIndex = 0;
+          var currentP = null;
+
+          function step() {
+            if (lineIndex >= lines.length) {
+              var cursor = document.createElement("span");
+              cursor.className = "terminal__cursor";
+              host.appendChild(cursor);
+              return;
+            }
+            var l = lines[lineIndex];
+            if (charIndex === 0) {
+              currentP = document.createElement("p");
+              currentP.className =
+                "terminal__line" + (l.type === "output" ? " is-output" : "");
+              if (l.type === "prompt") {
+                var promptSpan = document.createElement("span");
+                promptSpan.className = "prompt";
+                promptSpan.textContent = "$";
+                currentP.appendChild(promptSpan);
+              }
+              currentP.appendChild(document.createTextNode(""));
+              host.appendChild(currentP);
+            }
+            if (charIndex < l.text.length) {
+              currentP.lastChild.textContent += l.text.charAt(charIndex);
+              charIndex++;
+              setTimeout(step, 16 + Math.random() * 22);
+            } else {
+              lineIndex++;
+              charIndex = 0;
+              setTimeout(step, 220);
+            }
+          }
+          step();
+        }
+
+        if (host) {
+          if (reduceMotion) {
+            renderStatic();
+          } else {
+            typeWriter();
+          }
+        }
+
+        var revealEls = document.querySelectorAll(".reveal");
+        if ("IntersectionObserver" in window && revealEls.length) {
+          var io = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add("is-visible");
+                  io.unobserve(entry.target);
+                }
+              });
+            },
+            { threshold: 0.12, rootMargin: "0px 0px -60px 0px" },
+          );
+          revealEls.forEach(function (el) {
+            io.observe(el);
+          });
+        } else {
+          revealEls.forEach(function (el) {
+            el.classList.add("is-visible");
+          });
+        }
+
+        var tabs = Array.prototype.slice.call(
+          document.querySelectorAll(".tab"),
+        );
+        var indicator = document.getElementById("tabIndicator");
+        var sections = tabs
+          .map(function (t) {
+            return document.querySelector(t.getAttribute("href"));
+          })
+          .filter(Boolean);
+
+        function moveIndicator(tab) {
+          if (!tab || !indicator) return;
+          indicator.style.width = tab.offsetWidth + "px";
+          indicator.style.transform = "translateX(" + tab.offsetLeft + "px)";
+        }
+
+        function setActive(tab) {
+          tabs.forEach(function (t) {
+            t.classList.remove("is-active");
+          });
+          if (tab) {
+            tab.classList.add("is-active");
+            moveIndicator(tab);
+            var scrollHost = document.querySelector(".tabbar__scroll");
+            if (scrollHost) {
+              var target =
+                tab.offsetLeft -
+                scrollHost.clientWidth / 2 +
+                tab.offsetWidth / 2;
+              scrollHost.scrollTo({
+                left: target,
+                behavior: reduceMotion ? "auto" : "smooth",
+              });
+            }
+          }
+        }
+
+        if (sections.length && "IntersectionObserver" in window) {
+          var spy = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                  var idx = sections.indexOf(entry.target);
+                  if (idx > -1) setActive(tabs[idx]);
+                }
+              });
+            },
+            { rootMargin: "-45% 0px -50% 0px", threshold: 0 },
+          );
+          sections.forEach(function (s) {
+            spy.observe(s);
+          });
+        }
+
+        window.addEventListener("resize", function () {
+          var active = document.querySelector(".tab.is-active");
+          if (active) moveIndicator(active);
+        });
+
+        window.addEventListener("load", function () {
+          if (tabs[0]) moveIndicator(tabs[0]);
+        });
+      })();
+    </script>
   </body>
 </html>
