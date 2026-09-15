@@ -515,11 +515,34 @@ body {
   align-self: start;
 }
 .dpad {
+  --dpad-tilt-x: 0deg;
+  --dpad-tilt-y: 0deg;
   display: grid;
   grid-template-columns: repeat(3, 37px);
   grid-template-rows: repeat(3, 37px);
   position: relative;
+  transform: perspective(220px) rotateX(var(--dpad-tilt-x))
+    rotateY(var(--dpad-tilt-y));
+  transform-origin: center;
   filter: drop-shadow(0 4px 1px #555b5488);
+  transition:
+    transform 90ms,
+    filter 90ms;
+}
+.dpad:has(button:active, button.is-pressed) {
+  filter: drop-shadow(0 2px 1px #555b5488);
+}
+.dpad:has(.dpad-up:active, .dpad-up.is-pressed) {
+  --dpad-tilt-x: 10deg;
+}
+.dpad:has(.dpad-down:active, .dpad-down.is-pressed) {
+  --dpad-tilt-x: -10deg;
+}
+.dpad:has(.dpad-left:active, .dpad-left.is-pressed) {
+  --dpad-tilt-y: -10deg;
+}
+.dpad:has(.dpad-right:active, .dpad-right.is-pressed) {
+  --dpad-tilt-y: 10deg;
 }
 .dpad button,
 .dpad-pivot {
@@ -536,16 +559,13 @@ body {
   min-width: 37px;
   min-height: 37px;
   font-size: 0.75rem;
-  transition:
-    transform 90ms,
-    background 100ms;
+  transition: background 100ms;
 }
 .dpad button span {
   opacity: 0.45;
 }
 .dpad button:active,
 .dpad button.is-pressed {
-  transform: translateY(3px);
   background: #171d1a;
 }
 .dpad-up {

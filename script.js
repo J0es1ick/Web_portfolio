@@ -432,6 +432,15 @@ function flashControl(id) {
   const control =
     document.getElementById(id) || document.querySelector(`.${id}`);
   if (!control) return;
+  if (control.closest(".dpad")) {
+    for (const [pressedControl, timer] of pressTimers) {
+      if (pressedControl !== control && pressedControl.closest(".dpad")) {
+        clearTimeout(timer);
+        pressedControl.classList.remove("is-pressed");
+        pressTimers.delete(pressedControl);
+      }
+    }
+  }
   clearTimeout(pressTimers.get(control));
   control.classList.add("is-pressed");
   pressTimers.set(
