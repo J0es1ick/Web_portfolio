@@ -504,6 +504,10 @@ body {
   padding: 13px 9px 0;
   gap: 12px 28px;
 }
+.power-switch:enabled,
+.hardware :is(button:enabled, a[href]) {
+  cursor: pointer;
+}
 .power-switch:focus-visible,
 .hardware :is(button, a):focus-visible {
   outline: 2px dashed var(--case-ink);
