@@ -1,2199 +1,825 @@
 <!doctype html>
 <html lang="ru">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#111111" />
-    <title>J0es1ick — Backend / Fullstack Developer</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f4f5f6" />
+    <title>J0es1ick — Pocket Developer</title>
     <meta
       name="description"
-      content="Портфолио J0es1ick — Backend / Fullstack-разработчика. Сложные системы, продуктовая разработка и проекты на Go, Python, TypeScript и React."
+      content="Игровая приставка-портфолио J0es1ick. Backend, Fullstack и Computer Vision: проекты, технологии, опыт и контакты на одном экране."
     />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:title" content="J0es1ick — Pocket Developer" />
+    <meta
+      property="og:description"
+      content="Выберите раздел: обо мне, проекты, технологии, опыт или контакты. Backend / Fullstack-разработка на Go и TypeScript."
+    />
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&amp;family=Manrope:wght@400;500;600;700;800&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500&amp;display=swap"
+      href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;family=Russo+One&amp;display=swap"
       rel="stylesheet"
     />
-
-    <style>
-      :root {
-        --black: #111111;
-        --black-soft: #1b1b1b;
-        --white: #f4f4f0;
-        --white-pure: #ffffff;
-        --gray: #d8d8d2;
-        --gray-dark: #8d8d86;
-        --line-dark: #343434;
-        --line-light: #cacac4;
-        --acid: #e7ff4f;
-        --orange: #ff6d4d;
-        --violet: #7d65ff;
-        --mint: #54e3ad;
-        --font-sans: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI",
-          sans-serif;
-        --font-serif: "Newsreader", Georgia, serif;
-        --font-mono: "JetBrains Mono", Consolas, monospace;
-        --container: 1440px;
-        --gutter: clamp(20px, 3.5vw, 58px);
-        --header-h: 68px;
-        --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-        --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-      }
-
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-      }
-
-      html {
-        scroll-behavior: smooth;
-        background: var(--black);
-      }
-
-      body {
-        margin: 0;
-        overflow-x: hidden;
-        color: var(--black);
-        background: var(--white);
-        font-family: var(--font-sans);
-        font-size: 16px;
-        line-height: 1.6;
-        -webkit-font-smoothing: antialiased;
-      }
-
-      h1,
-      h2,
-      h3,
-      p,
-      ul,
-      ol,
-      dl,
-      dd,
-      figure {
-        margin: 0;
-      }
-
-      ul,
-      ol {
-        padding: 0;
-        list-style: none;
-      }
-
-      img {
-        display: block;
-        max-width: 100%;
-      }
-
-      a {
-        color: inherit;
-      }
-
-      button,
-      a {
-        -webkit-tap-highlight-color: transparent;
-      }
-
-      ::selection {
-        color: var(--black);
-        background: var(--acid);
-      }
-
-      .container {
-        width: min(100%, var(--container));
-        margin-inline: auto;
-        padding-inline: var(--gutter);
-      }
-
-      .skip-link {
-        position: fixed;
-        top: 10px;
-        left: 10px;
-        z-index: 1000;
-        padding: 10px 14px;
-        color: var(--black);
-        background: var(--acid);
-        font-weight: 700;
-        transform: translateY(-150%);
-      }
-
-      .skip-link:focus {
-        transform: translateY(0);
-      }
-
-      a:focus-visible,
-      button:focus-visible {
-        outline: 3px solid var(--acid);
-        outline-offset: 4px;
-      }
-
-      .scroll-progress {
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 1001;
-        width: 100%;
-        height: 3px;
-        pointer-events: none;
-      }
-
-      .scroll-progress span {
-        display: block;
-        width: 100%;
-        height: 100%;
-        background: var(--acid);
-        transform: scaleX(0);
-        transform-origin: left;
-        will-change: transform;
-      }
-
-      .site-header {
-        position: fixed;
-        top: 0;
-        right: 0;
-        left: 0;
-        z-index: 100;
-        color: var(--white);
-        background: var(--black);
-        border-bottom: 1px solid var(--line-dark);
-      }
-
-      .header__inner {
-        min-height: var(--header-h);
-        display: grid;
-        grid-template-columns: auto minmax(0, 1fr) auto;
-        gap: clamp(24px, 4vw, 64px);
-        align-items: center;
-      }
-
-      .brand {
-        font-size: 15px;
-        font-weight: 800;
-        letter-spacing: -0.04em;
-        text-decoration: none;
-      }
-
-      .brand span {
-        color: var(--acid);
-      }
-
-      .site-nav {
-        min-width: 0;
-        overflow-x: auto;
-        scrollbar-width: none;
-      }
-
-      .site-nav::-webkit-scrollbar {
-        display: none;
-      }
-
-      .site-nav ul {
-        width: max-content;
-        display: flex;
-        gap: clamp(18px, 2.5vw, 38px);
-      }
-
-      .nav-link {
-        position: relative;
-        display: block;
-        padding: 24px 0 21px;
-        color: #92928d;
-        font-family: var(--font-mono);
-        font-size: 9px;
-        font-weight: 500;
-        letter-spacing: 0.06em;
-        text-decoration: none;
-        white-space: nowrap;
-      }
-
-      .nav-link::after {
-        content: "";
-        position: absolute;
-        right: 0;
-        bottom: -1px;
-        left: 0;
-        height: 3px;
-        background: var(--acid);
-        transform: scaleX(0);
-        transform-origin: left;
-        transition: transform 200ms var(--ease-out);
-      }
-
-      .nav-link:hover,
-      .nav-link.is-active {
-        color: var(--white);
-      }
-
-      .nav-link.is-active::after {
-        transform: scaleX(1);
-      }
-
-      .header__link {
-        display: inline-flex;
-        gap: 8px;
-        align-items: center;
-        min-height: 34px;
-        padding: 0 13px;
-        color: var(--black);
-        background: var(--acid);
-        border-radius: 999px;
-        font-family: var(--font-mono);
-        font-size: 9px;
-        font-weight: 600;
-        text-decoration: none;
-        text-transform: uppercase;
-        transition:
-          background 180ms ease,
-          transform 180ms var(--ease-out);
-      }
-
-      .header__link:hover {
-        background: var(--white);
-        transform: translateY(-2px);
-      }
-
-      .hero {
-        position: relative;
-        height: 145vh;
-        color: var(--white);
-        background: var(--black);
-        scroll-margin-top: var(--header-h);
-      }
-
-      .hero__stage {
-        position: sticky;
-        top: 0;
-        height: 100vh;
-        min-height: 680px;
-        overflow: hidden;
-        padding-top: var(--header-h);
-        isolation: isolate;
-      }
-
-      .hero__stage::before {
-        content: "";
-        position: absolute;
-        inset: var(--header-h) 0 0;
-        z-index: -2;
-        background-image:
-          linear-gradient(var(--line-dark) 1px, transparent 1px),
-          linear-gradient(90deg, var(--line-dark) 1px, transparent 1px);
-        background-size: clamp(72px, 8vw, 128px) clamp(72px, 8vw, 128px);
-        opacity: 0.22;
-      }
-
-      .hero__stage::after {
-        content: "";
-        position: absolute;
-        top: 61%;
-        right: var(--gutter);
-        left: var(--gutter);
-        z-index: 0;
-        height: 1px;
-        background: linear-gradient(
-          90deg,
-          var(--acid) 0 11%,
-          #3a3a36 11% 100%
-        );
-        transform: scaleX(var(--hero-axis, 0.42));
-        transform-origin: left center;
-        will-change: transform;
-      }
-
-      .hero__portrait {
-        position: absolute;
-        top: calc(var(--header-h) + 34px);
-        right: var(--gutter);
-        z-index: 4;
-        width: clamp(88px, 8vw, 128px);
-        aspect-ratio: 1;
-        overflow: hidden;
-        border: 1px solid #464642;
-        border-radius: 50%;
-      }
-
-      .hero__portrait img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        filter: grayscale(1) contrast(1.08);
-      }
-
-      .hero__headline {
-        position: absolute;
-        top: 49%;
-        right: 0;
-        left: 0;
-        z-index: 2;
-        transform: translateY(-50%);
-        pointer-events: none;
-      }
-
-      .hero__line {
-        display: flex;
-        align-items: center;
-        width: max-content;
-        min-width: 100%;
-        color: var(--white);
-        font-weight: 800;
-        letter-spacing: -0.075em;
-        line-height: 0.9;
-        will-change: transform;
-      }
-
-      .hero__line--one {
-        justify-content: flex-start;
-        padding-left: max(var(--gutter), 4vw);
-        font-size: clamp(92px, 15.5vw, 248px);
-        transform: translate3d(var(--hero-line-one, 0px), 0, 0);
-      }
-
-      .hero__line--two {
-        justify-content: flex-end;
-        margin-top: clamp(20px, 2vw, 34px);
-        padding-right: max(var(--gutter), 4vw);
-        color: #c8c8c2;
-        font-size: clamp(34px, 5.4vw, 82px);
-        font-weight: 500;
-        letter-spacing: -0.055em;
-        line-height: 1;
-        transform: translate3d(var(--hero-line-two, 0px), 0, 0);
-      }
-
-      .hero__line--two em {
-        margin-right: 0.18em;
-        color: var(--acid);
-        font-family: var(--font-serif);
-        font-size: 0.8em;
-        font-weight: 400;
-        letter-spacing: -0.02em;
-      }
-
-      .hero__bottom {
-        position: absolute;
-        right: var(--gutter);
-        bottom: 30px;
-        left: var(--gutter);
-        z-index: 5;
-        display: grid;
-        grid-template-columns: minmax(0, 610px) auto;
-        gap: 32px;
-        align-items: end;
-      }
-
-      .hero__intro {
-        color: #b9b9b3;
-        font-size: clamp(13px, 1.25vw, 17px);
-        line-height: 1.7;
-      }
-
-      .scroll-cue {
-        display: grid;
-        grid-template-columns: auto 30px;
-        gap: 12px;
-        align-items: center;
-        justify-self: end;
-        color: #90908b;
-        font-family: var(--font-mono);
-        font-size: 8px;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
-
-      .scroll-cue i {
-        position: relative;
-        display: block;
-        width: 30px;
-        height: 30px;
-        border: 1px solid #585853;
-        border-radius: 50%;
-      }
-
-      .scroll-cue i::after {
-        content: "↓";
-        position: absolute;
-        inset: 0;
-        display: grid;
-        place-items: center;
-        color: var(--acid);
-        font-style: normal;
-        animation: cue 1.8s var(--ease-in-out) infinite;
-      }
-
-      @keyframes cue {
-        0%,
-        100% {
-          transform: translateY(-2px);
-        }
-        50% {
-          transform: translateY(3px);
-        }
-      }
-
-      .light-section {
-        color: var(--black);
-        background: var(--white);
-      }
-
-      .dark-section {
-        color: var(--white);
-        background: var(--black);
-      }
-
-      .section {
-        position: relative;
-        padding-block: clamp(92px, 11vw, 170px);
-        scroll-margin-top: var(--header-h);
-      }
-
-      .section-head {
-        margin-bottom: clamp(54px, 7vw, 100px);
-        padding-bottom: 16px;
-        border-bottom: 1px solid currentColor;
-      }
-
-      .section-head h2 {
-        font-size: clamp(28px, 4vw, 58px);
-        font-weight: 700;
-        letter-spacing: -0.055em;
-        line-height: 1;
-      }
-
-      .about__statement {
-        max-width: 1250px;
-        font-size: clamp(42px, 6.5vw, 100px);
-        font-weight: 700;
-        letter-spacing: -0.065em;
-        line-height: 0.98;
-      }
-
-      .about__statement span {
-        display: block;
-        overflow: hidden;
-      }
-
-      .about__statement i {
-        display: block;
-        font-style: normal;
-        transform: translateY(45%);
-        transition: transform 650ms var(--ease-out);
-      }
-
-      .about__statement.is-visible i {
-        transform: translateY(0);
-      }
-
-      .about__statement span:nth-child(2) i {
-        transition-delay: 40ms;
-      }
-
-      .about__statement span:nth-child(3) i {
-        transition-delay: 80ms;
-      }
-
-      .about__statement em {
-        color: inherit;
-        font-family: inherit;
-        font-weight: inherit;
-        text-decoration: underline;
-        text-decoration-color: var(--acid);
-        text-decoration-thickness: 0.12em;
-        text-underline-offset: 0.08em;
-      }
-
-      .about__body {
-        display: grid;
-        grid-template-columns: minmax(250px, 0.75fr) minmax(0, 1.5fr);
-        gap: clamp(50px, 9vw, 140px);
-        margin-top: clamp(68px, 10vw, 150px);
-        padding-top: 24px;
-        border-top: 1px solid var(--line-light);
-      }
-
-      .about__aside {
-        position: sticky;
-        top: calc(var(--header-h) + 32px);
-        align-self: start;
-      }
-
-      .about__aside-label {
-        color: var(--gray-dark);
-        font-family: var(--font-mono);
-        font-size: 9px;
-      }
-
-      .about__aside strong {
-        display: block;
-        margin-top: 14px;
-        font-size: clamp(22px, 2.5vw, 34px);
-        line-height: 1.1;
-      }
-
-      .about__aside-detail {
-        display: block;
-        margin-top: 18px;
-        color: #686861;
-        font-size: 12px;
-        line-height: 1.7;
-      }
-
-      .about__text {
-        color: #4d4d47;
-        font-size: clamp(16px, 1.55vw, 20px);
-        line-height: 1.85;
-      }
-
-      .about__principles {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 1px;
-        margin-top: 44px;
-        background: var(--black);
-        border: 1px solid var(--black);
-      }
-
-      .about__principles li {
-        min-height: 120px;
-        display: flex;
-        align-items: flex-end;
-        padding: 20px;
-        background: var(--white);
-        font-size: 12px;
-      }
-
-      .projects-scroll {
-        position: relative;
-        height: 420vh;
-        color: var(--white);
-        background: var(--black);
-        scroll-margin-top: var(--header-h);
-      }
-
-      .projects__sticky {
-        position: sticky;
-        top: 0;
-        height: 100vh;
-        min-height: 700px;
-        overflow: hidden;
-        padding-top: calc(var(--header-h) + 24px);
-      }
-
-      .projects__intro {
-        display: flex;
-        justify-content: space-between;
-        gap: 24px;
-        align-items: flex-end;
-        margin-bottom: clamp(20px, 3.2vh, 34px);
-      }
-
-      .projects__intro h2 {
-        font-size: clamp(42px, 6vw, 88px);
-        font-weight: 700;
-        letter-spacing: -0.065em;
-        line-height: 0.9;
-      }
-
-      .projects__intro p {
-        max-width: 330px;
-        color: #92928d;
-        font-size: 12px;
-        line-height: 1.7;
-      }
-
-      .project-track {
-        display: flex;
-        width: max-content;
-        gap: 20px;
-        padding-inline: var(--gutter);
-        transform: translate3d(var(--projects-x, 0px), 0, 0);
-        will-change: transform;
-      }
-
-      .project-card {
-        --card-bg: var(--white);
-        --card-ink: var(--black);
-        position: relative;
-        width: min(82vw, 1060px);
-        height: clamp(520px, 66vh, 720px);
-        display: grid;
-        grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.9fr);
-        overflow: hidden;
-        color: var(--card-ink);
-        background: var(--card-bg);
-        border-radius: 16px;
-      }
-
-      .project-card--game {
-        --card-bg: #e7e7e2;
-      }
-
-      .project-card--scheduler {
-        --card-bg: #d0d0cb;
-      }
-
-      .project-card--shortli {
-        --card-bg: var(--black-soft);
-        --card-ink: var(--white);
-        border: 1px solid var(--line-dark);
-      }
-
-      .project-card__content {
-        position: relative;
-        z-index: 2;
-        display: flex;
-        flex-direction: column;
-        padding: clamp(28px, 4vw, 54px);
-      }
-
-      .project-card__eyebrow {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 20px;
-        color: #5f5f59;
-        font-family: var(--font-mono);
-        font-size: 8px;
-        letter-spacing: 0.03em;
-      }
-
-      .project-card__eyebrow span:last-child {
-        text-align: right;
-      }
-
-      .project-card--shortli .project-card__eyebrow {
-        color: #a3a39d;
-      }
-
-      .project-card h3 {
-        max-width: 650px;
-        margin-top: clamp(32px, 5vh, 58px);
-        font-size: clamp(40px, 5vw, 78px);
-        font-weight: 800;
-        letter-spacing: -0.065em;
-        line-height: 0.92;
-      }
-
-      .project-card__description {
-        max-width: 56ch;
-        margin-top: 18px;
-        font-size: clamp(12px, 1vw, 15px);
-        line-height: 1.7;
-      }
-
-      .project-card__facts {
-        display: grid;
-        gap: 11px;
-        margin-top: auto;
-        padding-top: 24px;
-        border-top: 1px solid currentColor;
-      }
-
-      .project-card__facts div {
-        display: grid;
-        grid-template-columns: 72px minmax(0, 1fr);
-        gap: 16px;
-      }
-
-      .project-card__facts dt {
-        opacity: 0.55;
-        font-family: var(--font-mono);
-        font-size: 7px;
-      }
-
-      .project-card__facts dd {
-        font-size: 11px;
-        line-height: 1.55;
-      }
-
-      .project-card__footer {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 20px;
-        align-items: end;
-        margin-top: 22px;
-      }
-
-      .project-card__tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px 14px;
-        font-family: var(--font-mono);
-        font-size: 7px;
-        text-transform: uppercase;
-      }
-
-      .project-card__tags li:not(:last-child)::after {
-        content: "/";
-        margin-left: 14px;
-        opacity: 0.45;
-      }
-
-      .project-card__links {
-        display: flex;
-        gap: 10px;
-      }
-
-      .project-link {
-        display: inline-flex;
-        gap: 8px;
-        align-items: center;
-        min-height: 36px;
-        padding: 0 13px;
-        color: inherit;
-        border: 1px solid currentColor;
-        border-radius: 999px;
-        font-family: var(--font-mono);
-        font-size: 8px;
-        font-weight: 600;
-        text-decoration: none;
-        text-transform: uppercase;
-        transition:
-          color 180ms ease,
-          background 180ms ease,
-          transform 180ms var(--ease-out);
-      }
-
-      .project-link:hover {
-        color: var(--card-bg);
-        background: var(--card-ink);
-        transform: translateY(-2px);
-      }
-
-      .project-card__visual {
-        position: relative;
-        min-width: 0;
-        margin: 18px 18px 18px 0;
-        overflow: hidden;
-        background: var(--black);
-        border-radius: 10px;
-      }
-
-      .visual-grid {
-        position: absolute;
-        inset: 0;
-        background-image:
-          linear-gradient(#333 1px, transparent 1px),
-          linear-gradient(90deg, #333 1px, transparent 1px);
-        background-size: 52px 52px;
-        opacity: 0.38;
-      }
-
-      .balancer-diagram {
-        position: absolute;
-        inset: 12%;
-        display: grid;
-        grid-template-columns: auto 1fr auto;
-        gap: 14px;
-        align-items: center;
-      }
-
-      .balancer-diagram__client,
-      .balancer-diagram__hub,
-      .balancer-diagram__nodes span {
-        position: relative;
-        z-index: 2;
-        padding: 10px;
-        color: var(--white);
-        background: var(--black-soft);
-        border: 1px solid #555;
-        border-radius: 10px;
-        font-family: var(--font-mono);
-        font-size: 7px;
-        text-transform: uppercase;
-      }
-
-      .balancer-diagram__hub {
-        display: grid;
-        place-items: center;
-        width: 78px;
-        height: 78px;
-        justify-self: center;
-        color: var(--black);
-        background: var(--acid);
-        border: 0;
-        border-radius: 50%;
-        font-size: 12px;
-        animation: hub-pulse 2.8s ease-in-out infinite;
-      }
-
-      .balancer-diagram__line {
-        position: absolute;
-        top: 50%;
-        right: 11%;
-        left: 11%;
-        height: 1px;
-        background: var(--acid);
-        transform-origin: left;
-        animation: route-line 2.4s ease-in-out infinite;
-      }
-
-      .balancer-diagram__nodes {
-        display: grid;
-        gap: 10px;
-      }
-
-      .balancer-diagram__nodes span::before {
-        content: "";
-        display: inline-block;
-        width: 5px;
-        height: 5px;
-        margin-right: 7px;
-        border-radius: 50%;
-        background: var(--mint);
-      }
-
-      @keyframes hub-pulse {
-        0%,
-        100% {
-          transform: scale(1);
-        }
-        50% {
-          transform: scale(1.06);
-        }
-      }
-
-      @keyframes route-line {
-        0%,
-        100% {
-          opacity: 0.25;
-          transform: scaleX(0.2);
-        }
-        50% {
-          opacity: 1;
-          transform: scaleX(1);
-        }
-      }
-
-      .game-arena {
-        position: absolute;
-        inset: 0;
-        display: grid;
-        place-items: center;
-        color: var(--white);
-      }
-
-      .game-arena::before,
-      .game-arena::after {
-        content: "";
-        position: absolute;
-        width: 58%;
-        aspect-ratio: 1;
-        border: 1px solid #555;
-        border-radius: 50%;
-      }
-
-      .game-arena::after {
-        width: 35%;
-        border-color: var(--orange);
-        animation: arena-rotate 8s linear infinite;
-      }
-
-      .game-arena__vs {
-        z-index: 2;
-        color: var(--orange);
-        font-size: clamp(48px, 6vw, 92px);
-        font-weight: 800;
-        letter-spacing: -0.08em;
-      }
-
-      .game-arena__player {
-        position: absolute;
-        z-index: 2;
-        padding: 9px 11px;
-        border-radius: 999px;
-        font-family: var(--font-mono);
-        font-size: 7px;
-        text-transform: uppercase;
-      }
-
-      .game-arena__player--one {
-        top: 22%;
-        left: 15%;
-        color: var(--black);
-        background: var(--acid);
-      }
-
-      .game-arena__player--two {
-        right: 15%;
-        bottom: 22%;
-        background: var(--violet);
-      }
-
-      @keyframes arena-rotate {
-        to {
-          transform: rotate(360deg);
-        }
-      }
-
-      .schedule-ui {
-        position: absolute;
-        inset: 8%;
-        display: grid;
-        align-content: center;
-        gap: 9px;
-      }
-
-      .schedule-ui__header {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 10px;
-        color: #8c8c85;
-        font-family: var(--font-mono);
-        font-size: 7px;
-        text-transform: uppercase;
-      }
-
-      .schedule-ui__row {
-        display: grid;
-        grid-template-columns: 52px 1fr auto;
-        gap: 12px;
-        align-items: center;
-        padding: 12px;
-        color: var(--white);
-        background: #232323;
-        border-radius: 11px;
-        font-size: 9px;
-        animation: schedule-in 4s var(--ease-out) infinite;
-      }
-
-      .schedule-ui__row:nth-child(3) {
-        animation-delay: 0.25s;
-      }
-
-      .schedule-ui__row:nth-child(4) {
-        animation-delay: 0.5s;
-      }
-
-      .schedule-ui__row span,
-      .schedule-ui__row small {
-        color: #8e8e88;
-        font-family: var(--font-mono);
-        font-size: 7px;
-      }
-
-      .schedule-ui__row i {
-        width: 7px;
-        height: 7px;
-        border-radius: 50%;
-        background: var(--mint);
-      }
-
-      @keyframes schedule-in {
-        0%,
-        15% {
-          opacity: 0.35;
-          transform: translateX(15px);
-        }
-        35%,
-        100% {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      }
-
-      .shortli-ui {
-        position: absolute;
-        inset: 0;
-        display: grid;
-        place-content: center;
-        gap: 18px;
-        padding: 10%;
-        color: var(--white);
-      }
-
-      .shortli-ui__url {
-        max-width: 100%;
-        overflow: hidden;
-        padding: 14px;
-        color: #999992;
-        background: #242424;
-        border: 1px solid #3c3c3c;
-        border-radius: 12px;
-        font-family: var(--font-mono);
-        font-size: 8px;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-
-      .shortli-ui__arrow {
-        justify-self: center;
-        color: var(--violet);
-        font-size: 24px;
-        animation: short-arrow 1.6s ease-in-out infinite;
-      }
-
-      .shortli-ui__result {
-        padding: 17px;
-        color: var(--black);
-        background: var(--violet);
-        border-radius: 12px;
-        font-family: var(--font-mono);
-        font-size: 11px;
-        font-weight: 600;
-        text-align: center;
-      }
-
-      @keyframes short-arrow {
-        50% {
-          transform: translateY(5px);
-        }
-      }
-
-      .projects__progress {
-        position: absolute;
-        right: var(--gutter);
-        bottom: 22px;
-        left: var(--gutter);
-        height: 2px;
-        background: #383838;
-      }
-
-      .projects__progress span {
-        display: block;
-        width: 100%;
-        height: 100%;
-        background: var(--acid);
-        transform: scaleX(var(--projects-progress, 0));
-        transform-origin: left;
-      }
-
-      .skills-section {
-        padding-block: clamp(80px, 10vw, 140px);
-        color: var(--black);
-        background: var(--white);
-        border-top: 1px solid var(--line-light);
-        overflow: hidden;
-        scroll-margin-top: var(--header-h);
-      }
-
-      .skills__head {
-        display: grid;
-        grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
-        gap: clamp(40px, 8vw, 120px);
-        align-items: end;
-      }
-
-      .skills__head h2 {
-        font-size: clamp(46px, 6vw, 88px);
-        font-weight: 700;
-        letter-spacing: -0.065em;
-        line-height: 0.9;
-      }
-
-      .skills__head p {
-        max-width: 44ch;
-        font-size: 13px;
-      }
-
-      .skills-list {
-        margin-top: clamp(64px, 8vw, 110px);
-        border-top: 2px solid var(--black);
-      }
-
-      .skills-list__row {
-        display: grid;
-        grid-template-columns: 220px minmax(0, 1fr);
-        gap: 28px;
-        align-items: start;
-        padding: 24px 0;
-        border-bottom: 1px solid var(--black);
-      }
-
-      .skills-list dt {
-        font-family: var(--font-mono);
-        font-size: 9px;
-        font-weight: 600;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
-
-      .skills-list dd {
-        font-size: clamp(17px, 2vw, 27px);
-        font-weight: 600;
-        letter-spacing: -0.03em;
-      }
-
-      .experience__grid {
-        display: grid;
-        grid-template-columns: minmax(260px, 0.75fr) minmax(0, 1.5fr);
-        gap: clamp(50px, 8vw, 120px);
-      }
-
-      .experience__title {
-        position: sticky;
-        top: calc(var(--header-h) + 36px);
-        align-self: start;
-      }
-
-      .experience__title p {
-        margin-top: 20px;
-        color: var(--gray-dark);
-        font-size: 13px;
-        line-height: 1.7;
-      }
-
-      .experience__title h2 {
-        font-size: clamp(48px, 6vw, 86px);
-        font-weight: 700;
-        letter-spacing: -0.065em;
-        line-height: 0.9;
-      }
-
-      .timeline {
-        border-top: 2px solid var(--black);
-      }
-
-      .timeline__item {
-        padding: clamp(32px, 5vw, 64px) 0;
-        border-bottom: 1px solid var(--line-light);
-      }
-
-      .timeline__meta {
-        display: flex;
-        justify-content: space-between;
-        gap: 24px;
-        margin-bottom: 22px;
-        color: var(--gray-dark);
-        font-family: var(--font-mono);
-        font-size: 8px;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-      }
-
-      .timeline__item h3 {
-        font-size: clamp(27px, 3.5vw, 52px);
-        font-weight: 700;
-        letter-spacing: -0.055em;
-        line-height: 1.02;
-      }
-
-      .timeline__item p {
-        margin-top: 24px;
-        color: #50504a;
-        font-size: 14px;
-        line-height: 1.85;
-      }
-
-      .contact-section {
-        position: relative;
-        min-height: 82vh;
-        display: flex;
-        align-items: center;
-        overflow: hidden;
-        padding-block: calc(var(--header-h) + 80px) 80px;
-        color: var(--white);
-        background: var(--black);
-        scroll-margin-top: var(--header-h);
-      }
-
-      .contact__title {
-        max-width: 1180px;
-        font-size: clamp(58px, 8vw, 118px);
-        font-weight: 700;
-        letter-spacing: -0.075em;
-        line-height: 0.9;
-      }
-
-      .contact__bottom {
-        position: relative;
-        z-index: 2;
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(300px, 0.65fr);
-        gap: clamp(48px, 9vw, 140px);
-        align-items: end;
-        margin-top: clamp(70px, 10vw, 140px);
-      }
-
-      .contact__note {
-        max-width: 50ch;
-        color: #989892;
-        font-size: 13px;
-      }
-
-      .contact-list {
-        border-top: 1px solid var(--white);
-      }
-
-      .contact-list a {
-        display: grid;
-        grid-template-columns: 82px minmax(0, 1fr) auto;
-        gap: 16px;
-        align-items: center;
-        padding: 17px 0;
-        border-bottom: 1px solid #464646;
-        text-decoration: none;
-      }
-
-      .contact-list a:hover {
-        color: var(--acid);
-      }
-
-      .contact-list span {
-        color: #777771;
-        font-family: var(--font-mono);
-        font-size: 8px;
-        text-transform: uppercase;
-      }
-
-      .contact-list strong {
-        min-width: 0;
-        overflow: hidden;
-        font-size: 12px;
-        font-weight: 600;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-
-      .site-footer {
-        padding-block: 28px;
-        color: #81817b;
-        background: var(--black);
-        border-top: 1px solid var(--line-dark);
-      }
-
-      .footer__inner {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 14px 30px;
-        font-family: var(--font-mono);
-        font-size: 8px;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-      }
-
-      .footer__inner a {
-        color: var(--white);
-        text-decoration: none;
-      }
-
-      [data-reveal] {
-        opacity: 0;
-        transform: translateY(18px);
-        transition:
-          opacity 600ms var(--ease-out),
-          transform 600ms var(--ease-out);
-      }
-
-      [data-reveal].is-visible {
-        opacity: 1;
-        transform: none;
-      }
-
-      [data-reveal="delay-1"] {
-        transition-delay: 60ms;
-      }
-
-      [data-reveal="delay-2"] {
-        transition-delay: 120ms;
-      }
-
-      @media (max-width: 1020px) {
-        .project-card {
-          width: min(84vw, 860px);
-          grid-template-columns: minmax(0, 1.15fr) minmax(230px, 0.85fr);
-        }
-
-        .about__body,
-        .experience__grid {
-          grid-template-columns: 1fr;
-        }
-
-        .about__aside,
-        .experience__title {
-          position: static;
-        }
-
-        .about__aside {
-          display: block;
-        }
-      }
-
-      @media (max-width: 760px) {
-        :root {
-          --header-h: 60px;
-        }
-
-        .header__inner {
-          grid-template-columns: auto minmax(0, 1fr);
-          gap: 22px;
-        }
-
-        .header__link {
-          display: none;
-        }
-
-        .nav-link {
-          padding: 21px 0 18px;
-          font-size: 8px;
-        }
-
-        .hero {
-          height: 122vh;
-        }
-
-        .hero__stage {
-          min-height: 580px;
-        }
-
-        .hero__headline {
-          top: 48%;
-          transform: translateY(-50%);
-        }
-
-        .hero__portrait {
-          top: calc(var(--header-h) + 24px);
-          width: 82px;
-        }
-
-        .hero__line--one {
-          font-size: clamp(68px, 19vw, 118px);
-        }
-
-        .hero__line--two {
-          margin-top: 18px;
-          font-size: clamp(25px, 7.2vw, 48px);
-        }
-
-        .hero__bottom {
-          grid-template-columns: 1fr;
-          gap: 18px;
-        }
-
-        .scroll-cue {
-          display: none;
-        }
-
-        .about__principles {
-          grid-template-columns: 1fr;
-        }
-
-        .about__principles li {
-          min-height: 100px;
-        }
-
-        .projects-scroll {
-          height: auto !important;
-          padding-block: calc(var(--header-h) + 70px) 90px;
-        }
-
-        .projects__sticky {
-          position: static;
-          height: auto;
-          min-height: 0;
-          overflow: visible;
-          padding: 0;
-        }
-
-        .projects__intro {
-          align-items: start;
-          flex-direction: column;
-          padding-inline: var(--gutter);
-          margin-bottom: 38px;
-        }
-
-        .projects__intro p {
-          max-width: 50ch;
-        }
-
-        .project-track {
-          width: auto;
-          display: grid;
-          gap: 14px;
-          transform: none !important;
-        }
-
-        .project-card {
-          width: 100%;
-          height: auto;
-          min-height: 780px;
-          grid-template-columns: 1fr;
-          grid-template-rows: 1fr 280px;
-          border-radius: 22px;
-        }
-
-        .project-card__visual {
-          margin: 0 14px 14px;
-        }
-
-        .projects__progress {
-          display: none;
-        }
-
-        .skills__head,
-        .contact__bottom {
-          grid-template-columns: 1fr;
-        }
-
-        .skills-list__row {
-          grid-template-columns: 130px minmax(0, 1fr);
-          gap: 16px;
-        }
-
-        .contact-section {
-          min-height: auto;
-        }
-      }
-
-      @media (max-width: 480px) {
-        .brand {
-          display: none;
-        }
-
-        .header__inner {
-          display: block;
-        }
-
-        .site-nav ul {
-          gap: 20px;
-        }
-
-        .hero__line--one {
-          font-size: clamp(64px, 19vw, 82px);
-        }
-
-        .hero__line--one {
-          padding-left: 14px;
-        }
-
-        .hero__line--two {
-          padding-right: 14px;
-          font-size: clamp(24px, 7vw, 32px);
-        }
-
-        .hero__intro {
-          font-size: 12px;
-        }
-
-        .project-card {
-          min-height: 820px;
-          grid-template-rows: 1fr 250px;
-        }
-
-        .project-card__content {
-          padding: 24px 20px;
-        }
-
-        .project-card__footer {
-          align-items: flex-start;
-          flex-direction: column;
-        }
-
-        .project-card__links {
-          flex-wrap: wrap;
-        }
-
-        .skills-list__row {
-          grid-template-columns: 1fr;
-          gap: 9px;
-        }
-
-        .contact-list a {
-          grid-template-columns: 70px minmax(0, 1fr) auto;
-          gap: 10px;
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        html {
-          scroll-behavior: auto;
-        }
-
-        *,
-        *::before,
-        *::after {
-          animation-duration: 0.001ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.001ms !important;
-        }
-
-        [data-reveal],
-        .about__statement i {
-          opacity: 1;
-          transform: none;
-        }
-
-        .hero {
-          height: 100vh;
-        }
-
-        .hero__line,
-        .project-track {
-          transform: none !important;
-        }
-
-        .projects-scroll {
-          height: auto !important;
-          padding-block: calc(var(--header-h) + 70px) 90px;
-        }
-
-        .projects__sticky {
-          position: static;
-          height: auto;
-          min-height: 0;
-          overflow: visible;
-          padding: 0;
-        }
-
-        .projects__intro {
-          padding-inline: var(--gutter);
-        }
-
-        .project-track {
-          width: auto;
-          display: grid;
-        }
-
-        .project-card {
-          width: 100%;
-        }
-
-        .projects__progress {
-          display: none;
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="console.css" />
+    <script src="script.js" type="module"></script>
   </head>
-
   <body>
-    <a class="skip-link" href="#main">Перейти к содержимому</a>
-    <div class="scroll-progress" aria-hidden="true">
-      <span id="scrollProgress"></span>
-    </div>
-
-    <header class="site-header">
-      <div class="container header__inner">
-        <a class="brand" href="#top" aria-label="J0es1ick — в начало"
-          >J0es1ick<span>.</span></a
-        >
-        <nav class="site-nav" aria-label="Разделы сайта">
-          <ul>
-            <li><a class="nav-link" href="#about">Обо мне</a></li>
-            <li><a class="nav-link" href="#projects">Проекты</a></li>
-            <li><a class="nav-link" href="#skills">Стек</a></li>
-            <li><a class="nav-link" href="#experience">Опыт</a></li>
-            <li><a class="nav-link" href="#contact">Контакты</a></li>
-          </ul>
-        </nav>
-        <a
-          class="header__link"
-          href="https://github.com/J0es1ick"
-          target="_blank"
-          rel="noopener"
-          >GitHub <span aria-hidden="true">↗</span></a
-        >
+    <a class="skip-link" href="#screen-content">Перейти к экрану приставки</a>
+    <main class="desk" id="main">
+      <div class="desk-caption mono">
+        <a href="#about">J0ES1ICK / POCKET DEVELOPER</a
+        ><span>PERSONAL EDITION · 026</span>
       </div>
-    </header>
-
-    <main id="main">
-      <section class="hero" id="top" aria-labelledby="heroTitle">
-        <div class="hero__stage" id="heroStage">
-          <figure class="hero__portrait">
-            <img
-              src="assets/Screenshot_1.png"
-              alt="Рыжий кот — временный аватар J0es1ick"
-            />
-          </figure>
-
-          <h1 class="hero__headline" id="heroTitle">
-            <span class="hero__line hero__line--one">J0es1ick</span>
-            <span class="hero__line hero__line--two"
-              ><em>/</em> Backend &amp; Fullstack developer</span
+      <div class="console-stage">
+        <div
+          class="player"
+          data-power="on"
+          aria-label="Игровая приставка — портфолио J0es1ick"
+        >
+          <div class="console-top-edge">
+            <button
+              id="power-toggle"
+              class="power-switch enhanced-control"
+              type="button"
+              role="switch"
+              aria-checked="true"
+              aria-label="Питание приставки"
+              hidden
             >
-          </h1>
-
-          <div class="hero__bottom">
-            <p class="hero__intro">
-              Проектирую backend-системы, занимаюсь Computer Vision и
-              разрабатываю продукты целиком.
-            </p>
-            <span class="scroll-cue" aria-hidden="true"
-              >Листайте дальше <i></i
-            ></span>
-          </div>
-        </div>
-      </section>
-
-      <section class="section light-section" id="about">
-        <div class="container">
-          <div class="section-head" data-reveal>
-            <h2>Обо мне</h2>
+              <span class="power-rail" aria-hidden="true"><i></i></span
+              ><span class="mono" aria-hidden="true">OFF · ON</span>
+            </button>
+            <span class="case-model mono" aria-hidden="true">DMG — 026</span>
           </div>
 
-          <p class="about__statement" data-split-reveal>
-            <span><i>Работаю на стыке</i></span>
-            <span><i>backend, <em>Computer Vision</em></i></span>
-            <span><i>и продуктовой разработки.</i></span>
-          </p>
+          <div class="display-bezel">
+            <span class="battery-label mono"
+              ><i id="battery-led" aria-hidden="true"></i
+              ><span>BATTERY</span></span
+            >
+            <div class="screen" id="screen">
+              <div class="screen-ui" id="screen-ui">
+                <div class="screen-top mono">
+                  <span class="screen-mode"
+                    ><span class="status-dot" aria-hidden="true"></span
+                    ><span id="screen-mode">PROFILE</span></span
+                  ><span class="screen-track" id="screen-track"
+                    >TRACK 01 / 05</span
+                  ><span class="signal" aria-hidden="true"
+                    ><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i
+                    ><i></i
+                  ></span>
+                </div>
+                <nav class="section-keys" aria-label="Разделы портфолио">
+                  <a id="key-about" href="#about" data-section="about"
+                    ><span class="key-number mono">01</span><span>Обо мне</span
+                    ><i aria-hidden="true"></i
+                  ></a>
+                  <a id="key-projects" href="#projects" data-section="projects"
+                    ><span class="key-number mono">02</span><span>Проекты</span
+                    ><i aria-hidden="true"></i
+                  ></a>
+                  <a id="key-skills" href="#skills" data-section="skills"
+                    ><span class="key-number mono">03</span><span>Стек</span
+                    ><i aria-hidden="true"></i
+                  ></a>
+                  <a
+                    id="key-experience"
+                    href="#experience"
+                    data-section="experience"
+                    ><span class="key-number mono">04</span><span>Опыт</span
+                    ><i aria-hidden="true"></i
+                  ></a>
+                  <a id="key-contact" href="#contact" data-section="contact"
+                    ><span class="key-number mono">05</span><span>Связь</span
+                    ><i aria-hidden="true"></i
+                  ></a>
+                </nav>
+                <div
+                  class="screen-content"
+                  id="screen-content"
+                  tabindex="0"
+                  aria-label="Содержимое экрана, можно прокручивать"
+                >
+                  <section
+                    class="view profile-view"
+                    id="about"
+                    aria-labelledby="key-about"
+                    tabindex="-1"
+                  >
+                    <div class="profile-layout">
+                      <div class="profile-copy">
+                        <p class="eyebrow mono">HELLO, WORLD. I'M</p>
+                        <h1 data-typewriter>
+                          J0es1ick<span class="cursor" aria-hidden="true"
+                            >_</span
+                          >
+                        </h1>
+                        <p class="profile-role">
+                          Backend <span>&amp;</span><br />Fullstack
+                          developer<span class="period">.</span>
+                        </p>
+                        <p class="profile-intro">
+                          Работаю на стыке backend, Computer Vision и
+                          продуктовой разработки.
+                        </p>
+                        <p class="profile-detail">
+                          В R&amp;D создаю промышленный комплекс измерения
+                          грузов: от облаков точек и вычислений на GPU до API и
+                          desktop-приложения.
+                        </p>
+                        <div class="profile-tags mono">
+                          <span>GO</span><span>TYPESCRIPT</span
+                          ><span>PYTHON</span>
+                        </div>
+                      </div>
+                      <aside class="profile-card">
+                        <div class="avatar-frame">
+                          <img
+                            src="assets/Screenshot_1.png"
+                            width="180"
+                            height="180"
+                            alt="Рыжий кот — аватар J0es1ick"
+                            fetchpriority="high"
+                          /><span class="avatar-label mono">PLAYER ONE</span>
+                        </div>
+                        <dl class="profile-facts">
+                          <div>
+                            <dt>Сейчас</dt>
+                            <dd>Garpix / R&amp;D</dd>
+                          </div>
+                          <div>
+                            <dt>Фокус</dt>
+                            <dd>Системы целиком</dd>
+                          </div>
+                          <div>
+                            <dt>Принцип</dt>
+                            <dd>Измеримый результат</dd>
+                          </div>
+                        </dl>
+                      </aside>
+                    </div>
+                  </section>
 
-          <div class="about__body">
-            <aside class="about__aside" data-reveal>
-              <p class="about__aside-label">Сейчас</p>
-              <strong>Fullstack Developer<br />R&amp;D</strong>
-              <span class="about__aside-detail"
-                >Backend · Computer Vision · GPU · Desktop</span
+                  <section
+                    class="view projects-view"
+                    id="projects"
+                    aria-labelledby="key-projects"
+                    tabindex="-1"
+                  >
+                    <div class="view-heading">
+                      <h2>Проекты<span class="heading-dot">.</span></h2>
+                      <a
+                        class="screen-link mono"
+                        href="https://github.com/J0es1ick?tab=repositories"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >Все на GitHub ↗</a
+                      >
+                    </div>
+                    <div class="project-browser">
+                      <div
+                        class="project-selector"
+                        role="group"
+                        aria-label="Выбрать проект"
+                      >
+                        <button
+                          type="button"
+                          data-project="scheduler"
+                          aria-controls="project-scheduler"
+                        >
+                          <span class="item-index mono">01</span
+                          ><span
+                            ><strong>Scheduler</strong
+                            ><small>Расписания и автоматизация</small></span
+                          ><span class="item-arrow" aria-hidden="true">▶</span>
+                        </button>
+                        <button
+                          type="button"
+                          data-project="shortli"
+                          aria-controls="project-shortli"
+                        >
+                          <span class="item-index mono">02</span
+                          ><span
+                            ><strong>Shortli</strong
+                            ><small>Сервис коротких ссылок</small></span
+                          ><span class="item-arrow" aria-hidden="true">▶</span>
+                        </button>
+                        <button
+                          type="button"
+                          data-project="game"
+                          aria-controls="project-game"
+                        >
+                          <span class="item-index mono">03</span
+                          ><span
+                            ><strong>Пыль и Корона</strong
+                            ><small>Браузерная RPG</small></span
+                          ><span class="item-arrow" aria-hidden="true">▶</span>
+                        </button>
+                        <button
+                          type="button"
+                          data-project="balancer"
+                          aria-controls="project-balancer"
+                        >
+                          <span class="item-index mono">04</span
+                          ><span
+                            ><strong>Go Load Balancer</strong
+                            ><small>Инфраструктура</small></span
+                          ><span class="item-arrow" aria-hidden="true">▶</span>
+                        </button>
+                        <button
+                          type="button"
+                          data-project="resplitter"
+                          aria-controls="project-resplitter"
+                        >
+                          <span class="item-index mono">05</span
+                          ><span
+                            ><strong>Resplitter</strong
+                            ><small>Разделение чека · команда</small></span
+                          ><span class="item-arrow" aria-hidden="true">▶</span>
+                        </button>
+                        <button
+                          type="button"
+                          data-project="reminder"
+                          aria-controls="project-reminder"
+                        >
+                          <span class="item-index mono">06</span
+                          ><span
+                            ><strong>Reminder</strong
+                            ><small>Напоминания и погода</small></span
+                          ><span class="item-arrow" aria-hidden="true">▶</span>
+                        </button>
+                      </div>
+                      <div class="project-stage">
+                        <article
+                          class="project-detail"
+                          id="project-scheduler"
+                          data-project-detail="scheduler"
+                          aria-labelledby="title-scheduler"
+                        >
+                          <p class="eyebrow mono">01 / AUTOMATION PLATFORM</p>
+                          <h3 id="title-scheduler">Scheduler</h3>
+                          <p>
+                            Платформа расписаний вузов: Telegram-бот, публичный
+                            сайт и Control Room для управления источниками.
+                          </p>
+                          <ul class="feature-list">
+                            <li>
+                              Расписания ИГХТУ и ИГЭУ, подписки и уведомления.
+                            </li>
+                            <li>
+                              Подключаемые адаптеры и коннекторы с подписью
+                              Ed25519.
+                            </li>
+                            <li>
+                              SDK для Go и Python; экспорт PNG, JSON, CSV и ICS.
+                            </li>
+                          </ul>
+                          <ul class="tags">
+                            <li>Go</li>
+                            <li>PostgreSQL</li>
+                            <li>React</li>
+                            <li>Telegram API</li>
+                          </ul>
+                          <a
+                            class="screen-action"
+                            data-repository
+                            href="https://github.com/J0es1ick/Scheduler"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >Репозиторий Scheduler
+                            <span aria-hidden="true">↗</span></a
+                          >
+                        </article>
+                        <article
+                          class="project-detail"
+                          id="project-shortli"
+                          data-project-detail="shortli"
+                          aria-labelledby="title-shortli"
+                        >
+                          <p class="eyebrow mono">02 / SELF-HOSTED WEB APP</p>
+                          <h3 id="title-shortli">Shortli</h3>
+                          <p>
+                            Сервис коротких ссылок для самостоятельного
+                            размещения: управление адресами и аналитика
+                            переходов.
+                          </p>
+                          <ul class="feature-list">
+                            <li>
+                              Свои алиасы, срок действия ссылок и QR-коды.
+                            </li>
+                            <li>
+                              Аккаунты, роли, API-ключи и административная
+                              панель.
+                            </li>
+                            <li>Модерация, жалобы и блокировка доменов.</li>
+                          </ul>
+                          <ul class="tags">
+                            <li>Go</li>
+                            <li>React</li>
+                            <li>TypeScript</li>
+                            <li>PostgreSQL</li>
+                          </ul>
+                          <a
+                            class="screen-action"
+                            data-repository
+                            href="https://github.com/J0es1ick/Shortli"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >Репозиторий Shortli
+                            <span aria-hidden="true">↗</span></a
+                          >
+                        </article>
+                        <article
+                          class="project-detail"
+                          id="project-game"
+                          data-project-detail="game"
+                          aria-labelledby="title-game"
+                        >
+                          <p class="eyebrow mono">03 / SINGLE-PLAYER RPG</p>
+                          <h3 id="title-game">Пыль и Корона</h3>
+                          <p>
+                            Одиночная браузерная RPG с постоянным миром.
+                            Турниры, экипировка и соперники, которые развиваются
+                            вместе с героем.
+                          </p>
+                          <ul class="feature-list">
+                            <li>Шесть классов, ручные и автоматические бои.</li>
+                            <li>Фракции, сезоны и поколения мира.</li>
+                            <li>Сохранения локально в браузере.</li>
+                          </ul>
+                          <ul class="tags">
+                            <li>React</li>
+                            <li>TypeScript</li>
+                            <li>Vite</li>
+                          </ul>
+                          <div class="screen-actions">
+                            <a
+                              class="screen-action"
+                              data-repository
+                              href="https://github.com/J0es1ick/Game"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              >Репозиторий ↗</a
+                            ><a
+                              class="screen-action"
+                              href="https://j0es1ick.github.io/Game/"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              >Играть ↗</a
+                            >
+                          </div>
+                        </article>
+                        <article
+                          class="project-detail"
+                          id="project-balancer"
+                          data-project-detail="balancer"
+                          aria-labelledby="title-balancer"
+                        >
+                          <p class="eyebrow mono">
+                            04 / INFRASTRUCTURE · L7 PROXY
+                          </p>
+                          <h3 id="title-balancer">Go Load Balancer</h3>
+                          <p>
+                            HTTP reverse proxy с управлением backend-узлами во
+                            время работы и панелью мониторинга.
+                          </p>
+                          <ul class="feature-list">
+                            <li>
+                              Round-robin, активные и пассивные health-checks.
+                            </li>
+                            <li>Повторные попытки и WebSocket forwarding.</li>
+                            <li>
+                              Rate limiting с Redis / PostgreSQL; метрики
+                              Prometheus.
+                            </li>
+                          </ul>
+                          <ul class="tags">
+                            <li>Go</li>
+                            <li>Redis</li>
+                            <li>PostgreSQL</li>
+                            <li>Docker</li>
+                          </ul>
+                          <div class="screen-actions">
+                            <a
+                              class="screen-action"
+                              data-repository
+                              href="https://github.com/J0es1ick/load_balancer"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              >Репозиторий ↗</a
+                            ><a
+                              class="screen-action"
+                              href="https://j0es1ick.github.io/load_balancer/"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              >Интерактивное демо ↗</a
+                            >
+                          </div>
+                        </article>
+                        <article
+                          class="project-detail"
+                          id="project-resplitter"
+                          data-project-detail="resplitter"
+                          aria-labelledby="title-resplitter"
+                        >
+                          <p class="eyebrow mono">
+                            05 / TELEGRAM · TEAM PROJECT
+                          </p>
+                          <h3 id="title-resplitter">Resplitter</h3>
+                          <p>
+                            Telegram-сервис, который помогает разделить
+                            ресторанный счёт между гостями.
+                          </p>
+                          <ul class="feature-list">
+                            <li>Распознавание чека через Yandex OCR.</li>
+                            <li>Распределение позиций между участниками.</li>
+                            <li>
+                              Командная разработка; Mini App — отдельная часть
+                              проекта.
+                            </li>
+                          </ul>
+                          <ul class="tags">
+                            <li>Node.js</li>
+                            <li>TypeScript</li>
+                            <li>Telegram</li>
+                            <li>Yandex OCR</li>
+                          </ul>
+                          <a
+                            class="screen-action"
+                            data-repository
+                            href="https://github.com/J0es1ick/Resplitter"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >Репозиторий Resplitter
+                            <span aria-hidden="true">↗</span></a
+                          >
+                        </article>
+                        <article
+                          class="project-detail"
+                          id="project-reminder"
+                          data-project-detail="reminder"
+                          aria-labelledby="title-reminder"
+                        >
+                          <p class="eyebrow mono">06 / TELEGRAM BOT</p>
+                          <h3 id="title-reminder">Reminder</h3>
+                          <p>
+                            Telegram-бот для личных напоминаний и прогноза
+                            погоды.
+                          </p>
+                          <ul class="feature-list">
+                            <li>Ввод даты и времени напоминания.</li>
+                            <li>
+                              Управление списком и хранение записей в базе.
+                            </li>
+                            <li>Получение прогноза погоды прямо в Telegram.</li>
+                          </ul>
+                          <ul class="tags">
+                            <li>Node.js</li>
+                            <li>JavaScript</li>
+                            <li>PostgreSQL</li>
+                            <li>Sequelize</li>
+                          </ul>
+                          <a
+                            class="screen-action"
+                            data-repository
+                            href="https://github.com/J0es1ick/Reminder"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >Репозиторий Reminder
+                            <span aria-hidden="true">↗</span></a
+                          >
+                        </article>
+                        <div class="project-pagination enhanced-control" hidden>
+                          <button
+                            type="button"
+                            id="previous-project"
+                            aria-label="Предыдущий проект"
+                          >
+                            ←</button
+                          ><span class="mono" id="project-count"
+                            >ПРОЕКТ 01 / 06</span
+                          ><button
+                            type="button"
+                            id="next-project"
+                            aria-label="Следующий проект"
+                          >
+                            →
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <p class="source-note mono">
+                      Сверено с GitHub · 07.09.2026
+                    </p>
+                  </section>
+
+                  <section
+                    class="view"
+                    id="skills"
+                    aria-labelledby="key-skills"
+                    tabindex="-1"
+                  >
+                    <div class="view-heading">
+                      <h2>
+                        Мой инструментарий<span class="heading-dot">.</span>
+                      </h2>
+                      <span class="mono view-index">TOOLBOX / 05 GROUPS</span>
+                    </div>
+                    <dl class="toolbox">
+                      <div>
+                        <dt><span class="mono">01</span> Языки</dt>
+                        <dd>
+                          Go <span>/</span> TypeScript <span>/</span> JavaScript
+                          <span>/</span> Python <span>/</span> C++
+                        </dd>
+                      </div>
+                      <div>
+                        <dt><span class="mono">02</span> Backend</dt>
+                        <dd>
+                          Django <span>/</span> Node.js <span>/</span> NestJS
+                          <span>/</span> REST API
+                        </dd>
+                      </div>
+                      <div>
+                        <dt><span class="mono">03</span> Данные</dt>
+                        <dd>
+                          PostgreSQL <span>/</span> Redis <span>/</span> MongoDB
+                        </dd>
+                      </div>
+                      <div>
+                        <dt><span class="mono">04</span> Интерфейсы</dt>
+                        <dd>
+                          React <span>/</span> Vite <span>/</span> Electron
+                        </dd>
+                      </div>
+                      <div>
+                        <dt><span class="mono">05</span> Engineering</dt>
+                        <dd>
+                          Docker <span>/</span> Git <span>/</span> Computer
+                          Vision <span>/</span> GPU computing
+                        </dd>
+                      </div>
+                    </dl>
+                    <p class="screen-note">
+                      Выбираю инструменты под задачу. Основной фокус — backend,
+                      архитектура и сложные продуктовые системы.
+                    </p>
+                  </section>
+
+                  <section
+                    class="view"
+                    id="experience"
+                    aria-labelledby="key-experience"
+                    tabindex="-1"
+                  >
+                    <div class="view-heading">
+                      <h2>Опыт за кадром<span class="heading-dot">.</span></h2>
+                      <span class="mono view-index">EXPERIENCE LOG</span>
+                    </div>
+                    <div class="experience-layout">
+                      <div class="work">
+                        <p class="eyebrow mono">
+                          МАЙ 2025 — Н. В. / FULLSTACK · R&amp;D
+                        </p>
+                        <h3>Garpix <span>/ Visioner</span></h3>
+                        <p>
+                          Программно-аппаратный комплекс автоматического
+                          измерения грузов: backend, frontend и Computer Vision.
+                        </p>
+                        <div class="metrics">
+                          <div>
+                            <strong>≈ 30 → 5 с</strong
+                            ><span
+                              >обработка после переноса<br />критического
+                              пайплайна на GPU</span
+                            >
+                          </div>
+                          <div>
+                            <strong>2–5 см</strong
+                            ><span
+                              >точность измерения<br />габаритов груза</span
+                            >
+                          </div>
+                        </div>
+                        <ul class="feature-list">
+                          <li>3D-модель по облаку точек.</li>
+                          <li>REST API на Go для интеграции с WMS.</li>
+                          <li>Desktop на React, TypeScript и Electron.</li>
+                          <li>
+                            Декомпозиция, code review и интеграция решений
+                            команды в отсутствие техлида.
+                          </li>
+                        </ul>
+                      </div>
+                      <aside class="education">
+                        <p class="eyebrow mono">2023 — 2027 / EDUCATION</p>
+                        <h3>ИГХТУ</h3>
+                        <p>
+                          Ивановский государственный химико-технологический
+                          университет.
+                        </p>
+                        <strong>Информационные системы и технологии</strong>
+                        <div class="education-foot mono">ТЕОРИЯ ↔ ПРАКТИКА</div>
+                      </aside>
+                    </div>
+                  </section>
+
+                  <section
+                    class="view contact-view"
+                    id="contact"
+                    aria-labelledby="key-contact"
+                    tabindex="-1"
+                  >
+                    <p class="eyebrow mono">NEXT CONNECTION / КАНАЛ ОТКРЫТ</p>
+                    <h2>
+                      Есть интересная<br />задача<span class="heading-dot"
+                        >?</span
+                      >
+                    </h2>
+                    <p class="contact-copy">
+                      Проще всего написать в Telegram или на почту.
+                    </p>
+                    <div class="contact-links">
+                      <a
+                        href="https://t.me/Joes1ick"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        ><span class="mono">01 / TELEGRAM</span
+                        ><strong>@Joes1ick</strong
+                        ><span aria-hidden="true">↗</span></a
+                      ><a href="mailto:mrjoeslick@gmail.com"
+                        ><span class="mono">02 / EMAIL</span
+                        ><strong>mrjoeslick@gmail.com</strong
+                        ><span aria-hidden="true">↗</span></a
+                      ><a
+                        href="https://github.com/J0es1ick"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        ><span class="mono">03 / GITHUB</span
+                        ><strong>J0es1ick</strong
+                        ><span aria-hidden="true">↗</span></a
+                      >
+                    </div>
+                  </section>
+                </div>
+                <div class="screen-bottom mono">
+                  <span id="screen-caption">СОЗДАЮ СИСТЕМЫ ПОД КАПОТОМ.</span
+                  ><span class="screen-position" aria-hidden="true"
+                    ><i class="active"></i><i></i><i></i><i></i><i></i></span
+                  ><span id="screen-number">01 / 05</span>
+                </div>
+              </div>
+              <div class="boot-screen" aria-hidden="true">
+                <span class="boot-logo"
+                  >J0es1ick<span>POCKET DEVELOPER</span></span
+                ><span class="boot-progress"><i></i></span>
+              </div>
+            </div>
+          </div>
+          <header class="player-top">
+            <a
+              class="device-brand"
+              href="#about"
+              aria-label="J0es1ick — обо мне"
+              >J0es1ick
+              <span class="model"
+                >POCKET DEV<span class="brand-tm">™</span></span
+              ></a
+            >
+          </header>
+
+          <div class="hardware">
+            <div class="dpad-area enhanced-control" hidden>
+              <div
+                class="dpad"
+                role="group"
+                aria-label="Крестовина: разделы и прокрутка"
               >
-            </aside>
-
-            <div data-reveal="delay-1">
-              <p class="about__text">
-                Я Backend / Fullstack-разработчик с коммерческим опытом создания
-                высоконагруженных и алгоритмически сложных систем. Сейчас работаю
-                в R&amp;D над промышленным комплексом автоматического измерения
-                грузов и участвую во всём технологическом пайплайне: от обработки
-                облаков точек и алгоритмов Computer Vision до backend-сервисов,
-                REST API и desktop-приложений. Занимаюсь оптимизацией вычислений,
-                переносом критических участков на GPU, архитектурой новых
-                сервисов и интеграцией системы с внешними WMS.
-              </p>
-
-              <ul class="about__principles">
-                <li>Архитектура, которую легко развивать</li>
-                <li>Измеримая производительность</li>
-                <li>Продуктовый результат, а не просто код</li>
-              </ul>
+                <button
+                  class="dpad-up"
+                  type="button"
+                  id="scroll-up"
+                  aria-label="Прокрутить экран вверх"
+                >
+                  <span aria-hidden="true">▲</span>
+                </button>
+                <button
+                  class="dpad-left"
+                  type="button"
+                  id="previous-section"
+                  aria-label="Предыдущий раздел"
+                >
+                  <span aria-hidden="true">◀</span>
+                </button>
+                <span class="dpad-pivot" aria-hidden="true"></span>
+                <button
+                  class="dpad-right"
+                  type="button"
+                  id="next-section"
+                  aria-label="Следующий раздел"
+                >
+                  <span aria-hidden="true">▶</span>
+                </button>
+                <button
+                  class="dpad-down"
+                  type="button"
+                  id="scroll-down"
+                  aria-label="Прокрутить экран вниз"
+                >
+                  <span aria-hidden="true">▼</span>
+                </button>
+              </div>
+              <span class="controller-label mono">← → разделы · ↑ ↓ экран</span>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="projects-scroll" id="projects">
-        <div class="projects__sticky">
-          <div class="container projects__intro">
-            <h2>Проекты</h2>
-            <p>
-              Четыре работы с разными задачами: инфраструктура, игровая логика,
-              автоматизация и fullstack-разработка.
-            </p>
-          </div>
-
-          <div class="project-track" id="projectTrack">
-            <article class="project-card project-card--balancer">
-              <div class="project-card__content">
-                <div class="project-card__eyebrow">
-                  <span>Сетевой сервис</span
-                  ><span>Моя роль: архитектура и реализация</span>
-                </div>
-                <h3>load_<br />balancer</h3>
-                <p class="project-card__description">
-                  HTTP-балансировщик на Go для распределения запросов между
-                  несколькими узлами и контроля нагрузки.
-                </p>
-                <dl class="project-card__facts">
-                  <div>
-                    <dt>Задача</dt>
-                    <dd>Распределять трафик и своевременно исключать недоступные узлы.</dd>
-                  </div>
-                  <div>
-                    <dt>Решения</dt>
-                    <dd>Round-robin, TCP health-check, reverse proxy, token bucket и PostgreSQL.</dd>
-                  </div>
-                </dl>
-                <div class="project-card__footer">
-                  <ul class="project-card__tags">
-                    <li>Go</li>
-                    <li>PostgreSQL</li>
-                    <li>Docker</li>
-                  </ul>
-                  <div class="project-card__links">
-                    <a
-                      class="project-link"
-                      href="https://j0es1ick.github.io/load_balancer/"
-                      target="_blank"
-                      rel="noopener"
-                      >Демо ↗</a
-                    >
-                    <a
-                      class="project-link"
-                      href="https://github.com/J0es1ick/load_balancer"
-                      target="_blank"
-                      rel="noopener"
-                      >GitHub ↗</a
-                    >
-                  </div>
-                </div>
+            <div class="face-area">
+              <div class="face-buttons">
+                <a
+                  class="face-key button-b"
+                  href="#about"
+                  aria-label="Кнопка B: вернуться к профилю"
+                  ><span>B</span></a
+                >
+                <a
+                  class="face-key button-a"
+                  id="primary-action"
+                  href="#projects"
+                  aria-label="Кнопка A: смотреть проекты"
+                  ><span>A</span></a
+                >
               </div>
-              <div class="project-card__visual" aria-hidden="true">
-                <div class="visual-grid"></div>
-                <div class="balancer-diagram__line"></div>
-                <div class="balancer-diagram">
-                  <span class="balancer-diagram__client">client</span>
-                  <span class="balancer-diagram__hub">LB</span>
-                  <div class="balancer-diagram__nodes">
-                    <span>node 01</span><span>node 02</span
-                    ><span>node 03</span>
-                  </div>
-                </div>
+              <div class="action-readout">
+                <span class="mono">A /</span>
+                <span id="action-label">Смотреть проекты</span
+                ><span class="sr-only" id="action-caption"
+                  >PLAY / PROJECTS</span
+                >
               </div>
-            </article>
-
-            <article class="project-card project-card--game">
-              <div class="project-card__content">
-                <div class="project-card__eyebrow">
-                  <span>Браузерная игра</span
-                  ><span>Моя роль: логика и интерфейс</span>
-                </div>
-                <h3>RPG<br />Tournament</h3>
-                <p class="project-card__description">
-                  Пошаговая турнирная RPG, построенная вокруг расширяемой модели
-                  персонажей, арен и боевых механик.
-                </p>
-                <dl class="project-card__facts">
-                  <div>
-                    <dt>Задача</dt>
-                    <dd>Реализовать турнирную систему с несколькими режимами запуска.</dd>
-                  </div>
-                  <div>
-                    <dt>Решения</dt>
-                    <dd>Три класса, навыки, прокачка, автоплей, CLI и unit-тесты.</dd>
-                  </div>
-                </dl>
-                <div class="project-card__footer">
-                  <ul class="project-card__tags">
-                    <li>TypeScript</li>
-                    <li>Vite</li>
-                    <li>OOP</li>
-                  </ul>
-                  <div class="project-card__links">
-                    <a
-                      class="project-link"
-                      href="https://j0es1ick.github.io/Game/"
-                      target="_blank"
-                      rel="noopener"
-                      >Играть ↗</a
-                    >
-                    <a
-                      class="project-link"
-                      href="https://github.com/J0es1ick/Game"
-                      target="_blank"
-                      rel="noopener"
-                      >GitHub ↗</a
-                    >
-                  </div>
-                </div>
-              </div>
-              <div class="project-card__visual" aria-hidden="true">
-                <div class="visual-grid"></div>
-                <div class="game-arena">
-                  <span class="game-arena__player game-arena__player--one"
-                    >Knight</span
-                  >
-                  <strong class="game-arena__vs">VS</strong>
-                  <span class="game-arena__player game-arena__player--two"
-                    >Wizard</span
-                  >
-                </div>
-              </div>
-            </article>
-
-            <article class="project-card project-card--scheduler">
-              <div class="project-card__content">
-                <div class="project-card__eyebrow">
-                  <span>Telegram-бот</span
-                  ><span>Моя роль: backend и адаптеры</span>
-                </div>
-                <h3>Scheduler</h3>
-                <p class="project-card__description">
-                  Расширяемый Telegram-бот, который объединяет расписания из
-                  разных источников в одном интерфейсе.
-                </p>
-                <dl class="project-card__facts">
-                  <div>
-                    <dt>Задача</dt>
-                    <dd>Привести разные форматы расписаний к единой модели данных.</dd>
-                  </div>
-                  <div>
-                    <dt>Решения</dt>
-                    <dd>Подключаемые адаптеры, пользовательские источники, нормализация и PostgreSQL.</dd>
-                  </div>
-                </dl>
-                <div class="project-card__footer">
-                  <ul class="project-card__tags">
-                    <li>Go</li>
-                    <li>Telegram API</li>
-                    <li>Scraping</li>
-                  </ul>
-                  <div class="project-card__links">
-                    <a
-                      class="project-link"
-                      href="https://github.com/J0es1ick/Scheduler"
-                      target="_blank"
-                      rel="noopener"
-                      >GitHub ↗</a
-                    >
-                  </div>
-                </div>
-              </div>
-              <div class="project-card__visual" aria-hidden="true">
-                <div class="visual-grid"></div>
-                <div class="schedule-ui">
-                  <div class="schedule-ui__header">
-                    <span>Сегодня / 3 пары</span><span>online</span>
-                  </div>
-                  <div class="schedule-ui__row">
-                    <span>08:30</span><b>Лекция</b><i></i>
-                  </div>
-                  <div class="schedule-ui__row">
-                    <span>10:10</span><b>Практика</b><i></i>
-                  </div>
-                  <div class="schedule-ui__row">
-                    <span>12:00</span><b>Лабораторная</b><i></i>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article class="project-card project-card--shortli">
-              <div class="project-card__content">
-                <div class="project-card__eyebrow">
-                  <span>Fullstack-приложение</span
-                  ><span>Моя роль: backend, frontend и данные</span>
-                </div>
-                <h3>Shortli</h3>
-                <p class="project-card__description">
-                  Сервис коротких ссылок с пользовательскими аккаунтами,
-                  аналитикой и административным управлением.
-                </p>
-                <dl class="project-card__facts">
-                  <div>
-                    <dt>Задача</dt>
-                    <dd>Управлять короткими ссылками и отслеживать их использование.</dd>
-                  </div>
-                  <div>
-                    <dt>Решения</dt>
-                    <dd>Редиректы, статистика, QR-коды, сессии, профиль и админ-панель.</dd>
-                  </div>
-                </dl>
-                <div class="project-card__footer">
-                  <ul class="project-card__tags">
-                    <li>Go</li>
-                    <li>React 19</li>
-                    <li>PostgreSQL</li>
-                  </ul>
-                  <div class="project-card__links">
-                    <a
-                      class="project-link"
-                      href="https://github.com/J0es1ick/Shortli"
-                      target="_blank"
-                      rel="noopener"
-                      >GitHub ↗</a
-                    >
-                  </div>
-                </div>
-              </div>
-              <div class="project-card__visual" aria-hidden="true">
-                <div class="visual-grid"></div>
-                <div class="shortli-ui">
-                  <span class="shortli-ui__url"
-                    >very-long-url.dev/my-project/portfolio</span
-                  >
-                  <span class="shortli-ui__arrow">↓</span>
-                  <strong class="shortli-ui__result">sho.rt/a7K9</strong>
-                </div>
-              </div>
-            </article>
-          </div>
-
-          <div class="projects__progress" aria-hidden="true">
-            <span id="projectsProgress"></span>
-          </div>
-        </div>
-      </section>
-
-      <section class="skills-section" id="skills">
-        <div class="container">
-          <div class="skills__head">
-            <h2 data-reveal>Технологии</h2>
-            <p data-reveal="delay-1">
-              Основной фокус — backend-разработка, архитектура и сложные
-              продуктовые системы.
-            </p>
-          </div>
-
-          <dl class="skills-list" data-reveal>
-            <div class="skills-list__row">
-              <dt>Языки</dt>
-              <dd>Go, TypeScript, JavaScript, Python, C++</dd>
             </div>
-            <div class="skills-list__row">
-              <dt>Backend</dt>
-              <dd>Django, Node.js, NestJS, REST API</dd>
-            </div>
-            <div class="skills-list__row">
-              <dt>Данные</dt>
-              <dd>PostgreSQL, Redis, MongoDB</dd>
-            </div>
-            <div class="skills-list__row">
-              <dt>Frontend</dt>
-              <dd>React, Vite, Electron</dd>
-            </div>
-            <div class="skills-list__row">
-              <dt>Engineering</dt>
-              <dd>Docker, Git, Computer Vision, GPU computing</dd>
-            </div>
-          </dl>
-        </div>
-      </section>
-
-      <section class="section light-section" id="experience">
-        <div class="container experience__grid">
-          <div class="experience__title" data-reveal>
-            <h2>Опыт</h2>
-            <p>Коммерческая разработка и образование.</p>
-          </div>
-
-          <ol class="timeline">
-            <li class="timeline__item" data-reveal>
-              <div class="timeline__meta">
-                <span>Fullstack Developer, R&amp;D</span>
-                <span>май 2025 — н.в.</span>
-              </div>
-              <h3>Garpix · промышленный комплекс Visioner</h3>
-              <p>
-                Разрабатываю программно-аппаратный комплекс автоматического
-                измерения грузов. Работаю одновременно с backend, frontend и
-                алгоритмической частью: повысил точность измерений до 2–5 см;
-                создал модуль построения 3D-модели по облаку точек; перенёс
-                критический пайплайн на GPU и сократил обработку примерно с 30
-                до 5 секунд; разработал REST API на Go для интеграции с WMS и
-                desktop-приложение на React + TypeScript + Electron. В период
-                отсутствия техлида координировал декомпозицию задач, code review
-                и интеграцию решений R&amp;D-команды.
-              </p>
-            </li>
-
-            <li class="timeline__item" data-reveal>
-              <div class="timeline__meta">
-                <span>Образование</span>
-                <span>2023 — 2027</span>
-              </div>
-              <h3>
-                Ивановский государственный химико-технологический университет
-              </h3>
-              <p>
-                Информационные системы и технологии. Параллельно с обучением
-                работаю коммерческим разработчиком, поэтому новые знания сразу
-                проходят проверку реальными продуктами и ограничениями.
-              </p>
-            </li>
-          </ol>
-        </div>
-      </section>
-
-      <section class="contact-section" id="contact">
-        <div class="container">
-          <h2 class="contact__title" data-reveal>Связаться</h2>
-
-          <div class="contact__bottom">
-            <p class="contact__note" data-reveal>
-              Проще всего написать в Telegram или на почту.
-            </p>
-            <div class="contact-list" data-reveal="delay-1">
+            <div class="system-buttons">
+              <button
+                class="system-key enhanced-control"
+                id="select-section"
+                type="button"
+                aria-label="SELECT: следующий раздел"
+                hidden
+              >
+                <span class="system-key-cap" aria-hidden="true"></span
+                ><span>SELECT</span>
+              </button>
               <a
-                href="https://t.me/Joes1ick"
-                target="_blank"
-                rel="noopener"
+                class="system-key"
+                href="#projects"
+                aria-label="START: открыть проекты"
+                ><span class="system-key-cap" aria-hidden="true"></span
+                ><span>START</span></a
               >
-                <span>Telegram</span><strong>@Joes1ick</strong
-                ><b aria-hidden="true">↗</b>
-              </a>
-              <a href="mailto:mrjoeslick@gmail.com">
-                <span>Почта</span><strong>mrjoeslick@gmail.com</strong
-                ><b aria-hidden="true">↗</b>
-              </a>
-              <a
-                href="https://github.com/J0es1ick"
-                target="_blank"
-                rel="noopener"
+            </div>
+            <div class="shell-utility">
+              <button
+                class="motion-button enhanced-control"
+                id="motion-toggle"
+                type="button"
+                aria-label="Анимация экрана"
+                aria-pressed="true"
+                hidden
               >
-                <span>GitHub</span><strong>J0es1ick</strong
-                ><b aria-hidden="true">↗</b>
-              </a>
+                <span class="motion-led" aria-hidden="true"></span
+                ><span class="mono" aria-hidden="true" id="motion-label"
+                  >FX ON</span
+                >
+              </button>
+              <div class="speaker-grille" aria-hidden="true">
+                <i></i><i></i><i></i><i></i><i></i><i></i>
+              </div>
             </div>
           </div>
+          <span class="shell-serial mono" aria-hidden="true"
+            >J / HANDHELD SYSTEM · 026</span
+          >
         </div>
-      </section>
-    </main>
-
-    <footer class="site-footer">
-      <div class="container footer__inner">
-        <a href="#top">J0es1ick.</a>
-        <span>© <span id="year"></span> J0es1ick</span>
       </div>
-    </footer>
-
-    <script>
-      (function () {
-        "use strict";
-
-        var reducedMotion = window.matchMedia(
-          "(prefers-reduced-motion: reduce)",
-        ).matches;
-        var year = document.getElementById("year");
-        var scrollProgress = document.getElementById("scrollProgress");
-        var hero = document.getElementById("top");
-        var heroStage = document.getElementById("heroStage");
-        var projectsSection = document.getElementById("projects");
-        var projectTrack = document.getElementById("projectTrack");
-        var projectsProgress = document.getElementById("projectsProgress");
-        var ticking = false;
-        var projectTravel = 0;
-
-        if (year) year.textContent = new Date().getFullYear();
-
-        function clamp(value, min, max) {
-          return Math.min(Math.max(value, min), max);
-        }
-
-        function isHorizontalProjects() {
-          return !reducedMotion && window.innerWidth > 760;
-        }
-
-        function measureProjects() {
-          if (!projectsSection || !projectTrack) return;
-
-          if (!isHorizontalProjects()) {
-            projectsSection.style.height = "";
-            projectTravel = 0;
-            return;
-          }
-
-          projectTravel = Math.max(
-            0,
-            projectTrack.scrollWidth - window.innerWidth + window.innerWidth * 0.08,
-          );
-          projectsSection.style.height =
-            window.innerHeight + projectTravel + window.innerHeight * 0.55 + "px";
-        }
-
-        function renderScroll() {
-          ticking = false;
-          var scrollTop = window.scrollY || document.documentElement.scrollTop;
-          var scrollMax =
-            document.documentElement.scrollHeight - window.innerHeight;
-          var pageProgress = scrollMax > 0 ? scrollTop / scrollMax : 0;
-
-          if (scrollProgress) {
-            scrollProgress.style.transform =
-              "scaleX(" + clamp(pageProgress, 0, 1) + ")";
-          }
-
-          if (!reducedMotion && hero && heroStage) {
-            var heroRect = hero.getBoundingClientRect();
-            var heroRange = Math.max(1, hero.offsetHeight - window.innerHeight);
-            var heroProgress = clamp(-heroRect.top / heroRange, 0, 1);
-            heroStage.style.setProperty(
-              "--hero-line-one",
-              -heroProgress * window.innerWidth * 0.11 + "px",
-            );
-            heroStage.style.setProperty(
-              "--hero-line-two",
-              heroProgress * window.innerWidth * 0.13 + "px",
-            );
-            heroStage.style.setProperty(
-              "--hero-axis",
-              0.42 + heroProgress * 0.58,
-            );
-          }
-
-          if (isHorizontalProjects() && projectsSection && projectTrack) {
-            var projectsRect = projectsSection.getBoundingClientRect();
-            var projectsRange = Math.max(
-              1,
-              projectsSection.offsetHeight - window.innerHeight,
-            );
-            var horizontalProgress = clamp(-projectsRect.top / projectsRange, 0, 1);
-            projectTrack.style.setProperty(
-              "--projects-x",
-              -horizontalProgress * projectTravel + "px",
-            );
-            if (projectsProgress) {
-              projectsProgress.style.setProperty(
-                "--projects-progress",
-                horizontalProgress,
-              );
-            }
-          }
-        }
-
-        function requestRender() {
-          if (!ticking) {
-            ticking = true;
-            window.requestAnimationFrame(renderScroll);
-          }
-        }
-
-        window.addEventListener("scroll", requestRender, { passive: true });
-        window.addEventListener("resize", function () {
-          measureProjects();
-          requestRender();
-        });
-
-        var revealElements = document.querySelectorAll(
-          "[data-reveal], [data-split-reveal]",
-        );
-
-        if (reducedMotion || !("IntersectionObserver" in window)) {
-          revealElements.forEach(function (element) {
-            element.classList.add("is-visible");
-          });
-        } else {
-          var revealObserver = new IntersectionObserver(
-            function (entries) {
-              entries.forEach(function (entry) {
-                if (entry.isIntersecting) {
-                  entry.target.classList.add("is-visible");
-                  revealObserver.unobserve(entry.target);
-                }
-              });
-            },
-            { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
-          );
-
-          revealElements.forEach(function (element) {
-            revealObserver.observe(element);
-          });
-        }
-
-        var navLinks = Array.prototype.slice.call(
-          document.querySelectorAll(".nav-link"),
-        );
-        var sections = navLinks
-          .map(function (link) {
-            return document.querySelector(link.getAttribute("href"));
-          })
-          .filter(Boolean);
-
-        if ("IntersectionObserver" in window) {
-          var navObserver = new IntersectionObserver(
-            function (entries) {
-              entries.forEach(function (entry) {
-                if (!entry.isIntersecting) return;
-                var activeHref = "#" + entry.target.id;
-                navLinks.forEach(function (link) {
-                  var isActive = link.getAttribute("href") === activeHref;
-                  link.classList.toggle("is-active", isActive);
-                  if (isActive) {
-                    link.setAttribute("aria-current", "location");
-                  } else {
-                    link.removeAttribute("aria-current");
-                  }
-                });
-              });
-            },
-            { rootMargin: "-30% 0px -62% 0px", threshold: 0 },
-          );
-
-          sections.forEach(function (section) {
-            navObserver.observe(section);
-          });
-        }
-
-        measureProjects();
-        renderScroll();
-      })();
-    </script>
+      <footer class="desk-footer mono">
+        <span>© <span id="year">2026</span> J0es1ick</span
+        ><span>← → разделы · ↑ ↓ прокрутка · A открыть · B профиль</span>
+      </footer>
+      <p
+        class="sr-only"
+        id="player-announcement"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      ></p>
+      <noscript
+        ><p class="no-script">
+          JavaScript отключён: все разделы доступны по порядку внутри экрана.
+        </p></noscript
+      >
+    </main>
   </body>
 </html>
