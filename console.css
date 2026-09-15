@@ -148,12 +148,7 @@ body {
   box-shadow:
     0 2px 1px #54605088,
     inset 0 2px 1px #e9eee1;
-  transition:
-    left 180ms ease,
-    filter 140ms;
-}
-.power-switch:hover .power-rail i {
-  filter: brightness(1.08);
+  transition: left 180ms ease;
 }
 .power-switch[aria-checked="false"] .power-rail i {
   left: 0;
@@ -509,6 +504,11 @@ body {
   padding: 13px 9px 0;
   gap: 12px 28px;
 }
+.power-switch:focus-visible,
+.hardware :is(button, a):focus-visible {
+  outline: 2px dashed var(--case-ink);
+  outline-offset: 4px;
+}
 .dpad-area {
   grid-area: pad;
   justify-self: start;
@@ -542,9 +542,6 @@ body {
 }
 .dpad button span {
   opacity: 0.45;
-}
-.dpad button:hover {
-  background: #373e3a;
 }
 .dpad button:active,
 .dpad button.is-pressed {
@@ -629,8 +626,7 @@ body {
     1px 7px 4px #45493844;
   transition:
     transform 90ms,
-    box-shadow 100ms,
-    filter 100ms;
+    box-shadow 100ms;
 }
 .face-key span {
   position: absolute;
@@ -645,10 +641,6 @@ body {
 .button-b {
   left: 4px;
   top: 24px;
-}
-.face-key:hover {
-  filter: brightness(1.09);
-  transform: translateY(-1px);
 }
 .face-key:active,
 .face-key.is-pressed {
@@ -707,10 +699,7 @@ body {
     0 3px 2px #707765;
   transition:
     transform 100ms,
-    background 100ms;
-}
-.system-key:hover .system-key-cap {
-  background: linear-gradient(#c3c7bc, #969e8e);
+    box-shadow 100ms;
 }
 .system-key:active .system-key-cap,
 .system-key.is-pressed .system-key-cap {
@@ -733,11 +722,11 @@ body {
   padding: 7px 0;
   min-height: 32px;
   background: none;
+  box-shadow: none;
   gap: 5px;
 }
 .motion-button:hover {
   background: none;
-  color: #333f2b;
 }
 .motion-button .mono {
   font-size: 0.75rem;
